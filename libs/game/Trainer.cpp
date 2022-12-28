@@ -11,14 +11,13 @@ Trainer::Trainer(int x, int y)
 ,tileState(0)
 ,tileRow(0)
 ,tileSize(sf::Vector2u {64, 64})
-,blockSize(64)
 {
     if (!texture.loadFromFile("assets/textures/m-walk.png")) {
         std::cerr << "Failed to load trainer texture\n";
     }
     
-    this->vertices.setPrimitiveType(sf::Quads);
-    this->vertices.resize(4);
+    vertices.setPrimitiveType(sf::Quads);
+    vertices.resize(4);
 }
 
 Trainer::~Trainer() 
@@ -26,17 +25,17 @@ Trainer::~Trainer()
 }
 
 void Trainer::refresh() {
-    sf::Vertex* mainVertex = &vertices[0];
+    sf::Vertex* vert = &vertices[0];
 
-    mainVertex[0].position = sf::Vector2f(positionX - blockSize / 2, positionY - blockSize / 2);
-    mainVertex[1].position = sf::Vector2f(positionX + blockSize / 2, positionY - blockSize / 2);
-    mainVertex[2].position = sf::Vector2f(positionX + blockSize / 2, positionY + blockSize / 2);
-    mainVertex[3].position = sf::Vector2f(positionX - blockSize / 2, positionY + blockSize / 2);
+    vert[0].position = sf::Vector2f(positionX - BLOCK_SIZE / 2, positionY - BLOCK_SIZE / 2);
+    vert[1].position = sf::Vector2f(positionX + BLOCK_SIZE / 2, positionY - BLOCK_SIZE / 2);
+    vert[2].position = sf::Vector2f(positionX + BLOCK_SIZE / 2, positionY + BLOCK_SIZE / 2);
+    vert[3].position = sf::Vector2f(positionX - BLOCK_SIZE / 2, positionY + BLOCK_SIZE / 2);
 
-    mainVertex[0].texCoords = sf::Vector2f(tileState * tileSize.x, tileRow * tileSize.y);
-    mainVertex[1].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, tileRow * tileSize.y);
-    mainVertex[2].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, (tileRow + 1) * tileSize.y);
-    mainVertex[3].texCoords = sf::Vector2f(tileState * tileSize.x, (tileRow + 1) * tileSize.y);
+    vert[0].texCoords = sf::Vector2f(tileState * tileSize.x, tileRow * tileSize.y);
+    vert[1].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, tileRow * tileSize.y);
+    vert[2].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, (tileRow + 1) * tileSize.y);
+    vert[3].texCoords = sf::Vector2f(tileState * tileSize.x, (tileRow + 1) * tileSize.y);
 }
 
 void Trainer::move(Direction direction) {

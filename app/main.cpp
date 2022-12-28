@@ -1,21 +1,28 @@
 #include "game/Game.hpp"
+#include "game/TextureLoader.hpp"
+#include "game/Zone.hpp"
 #include "util/Util.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
+
 using namespace std;
+using namespace DGMon;
 
 int main() {
-    auto window = sf::RenderWindow{ { 1440u, 810u }, "DG's Maze Project" };
+    auto window = sf::RenderWindow{ { 1280u, 960u }, "DG Mon"};
     window.setFramerateLimit(24);
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
 
-    DGMon::Trainer trainer(1440 / 2, 810 / 2);
+    Trainer trainer(1280 / 2, 960 / 2);
     trainer.refresh();
+
+    Zone zone1(std::vector<Block> {Block (std::vector<Tile> {GRASS_1, GRASS_2, GRASS_3, GRASS_4}, 0)});
+    zone1.load();
 
     // Flags for key pressed
     bool moving = false;
-    DGMon::Direction dir = DGMon::NONE_DIRECTION;
+    Direction dir = NONE_DIRECTION;
 
     while (window.isOpen())
     {
@@ -33,19 +40,19 @@ int main() {
                 {
                     case sf::Keyboard::W: 
                         moving = true;
-                        dir = DGMon::UP_DIRECTION;
+                        dir = UP_DIRECTION;
                         break;
                     case sf::Keyboard::S: 
                         moving = true;
-                        dir = DGMon::DOWN_DIRECTION;
+                        dir = DOWN_DIRECTION;
                         break;
                     case sf::Keyboard::A: 
                         moving = true;
-                        dir = DGMon::LEFT_DIRECTION;
+                        dir = LEFT_DIRECTION;
                         break;
                     case sf::Keyboard::D: 
                         moving = true;
-                        dir = DGMon::RIGHT_DIRECTION;
+                        dir = RIGHT_DIRECTION;
                         break;
                     default : break;
                 }
@@ -68,6 +75,7 @@ int main() {
         }
 
         window.clear();
+        window.draw(zone1);
         window.draw(trainer);
         window.display();
     }

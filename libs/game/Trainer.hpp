@@ -21,7 +21,6 @@ namespace DGMon {
             int tileState;
             int tileRow;
             sf::Vector2u tileSize;
-            int blockSize;
     };
 };
 

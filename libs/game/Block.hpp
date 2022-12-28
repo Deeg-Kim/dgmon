@@ -2,14 +2,19 @@
 #define BLOCK_H
 
 #include <vector>
+#include <set>
+#include "util/Util.hpp"
 #include "Tile.hpp"
 
 namespace DGMon {
     class Block {
         public:
-            Block();
+            Block(std::vector<Tile> tiles, int height);
             ~Block();
-        private:      
+            std::vector<sf::Vertex> getVertecies(int initX, int initY);
+        private:
+            std::vector<Tile> tiles;
+            int height;
     };
 };
 
