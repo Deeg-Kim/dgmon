@@ -1,7 +1,10 @@
 add_library(
     DGMonLibrary
-    "${CMAKE_CURRENT_SOURCE_DIR}/game/TextureLoader.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/game/TextureLoader.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/Const.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/Direction.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/Direction.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/util/Util.hpp"
+
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Tile.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Block.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Block.cpp"
@@ -10,9 +13,10 @@ add_library(
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Trainer.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Trainer.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/game/Game.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/util/Direction.hpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/util/Direction.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/util/Util.hpp"
+
+    "${CMAKE_CURRENT_SOURCE_DIR}/data/LayoutLoader.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/data/LayoutLoader.cpp"
+    
 )
-target_link_libraries(DGMonLibrary PRIVATE sfml-graphics)
+target_link_libraries(DGMonLibrary PRIVATE jsoncpp_lib sfml-graphics)
 target_include_directories(DGMonLibrary PUBLIC "${CMAKE_CURRENT_SOURCE_DIR}")

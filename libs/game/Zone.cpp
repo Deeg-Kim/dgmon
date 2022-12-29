@@ -1,26 +1,25 @@
 #include "Zone.hpp"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
-#include "game/TextureLoader.hpp"
 #include "util/Const.hpp"
 
 using namespace DGMon;
 
-Zone::Zone(std::vector<Block> blocks)
+Zone::Zone(std::vector<Block> blocks, sf::Texture texture)
 :blocks(blocks)
-,texture(sf::Texture ())
+,texture(texture)
 {
-    TextureSource source = PRIMARY_GENERAL;
+    // TextureSource source = OUTSIDE;
 
-    switch (source) {
-        case PRIMARY_GENERAL:
-            if (!texture.loadFromFile("assets/tilesets/primary/general/tiles.png")) {
-                std::cerr << "Failed to load primary general texture\n";
-            }
-            break;
-        default:
-            throw std::invalid_argument("Unknown texture source.");
-    }
+    // switch (source) {
+    //     case OUTSIDE:
+    //         if (!texture.loadFromFile("assets/tilesets/outside.png")) {
+    //             std::cerr << "Failed to load outside texture\n";
+    //         }
+    //         break;
+    //     default:
+    //         throw std::invalid_argument("Unknown texture source.");
+    // }
 
     sf::VertexArray vertices;
 }

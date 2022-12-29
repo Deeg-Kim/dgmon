@@ -10,9 +10,9 @@ Trainer::Trainer(int x, int y)
 ,positionY(y)
 ,tileState(0)
 ,tileRow(0)
-,tileSize(sf::Vector2u {64, 64})
+,tileSize(sf::Vector2u {32, 48})
 {
-    if (!texture.loadFromFile("assets/textures/m-walk.png")) {
+    if (!texture.loadFromFile("assets/characters/player_m.png")) {
         std::cerr << "Failed to load trainer texture\n";
     }
     
@@ -27,10 +27,10 @@ Trainer::~Trainer()
 void Trainer::refresh() {
     sf::Vertex* vert = &vertices[0];
 
-    vert[0].position = sf::Vector2f(positionX - BLOCK_SIZE / 2, positionY - BLOCK_SIZE / 2);
-    vert[1].position = sf::Vector2f(positionX + BLOCK_SIZE / 2, positionY - BLOCK_SIZE / 2);
-    vert[2].position = sf::Vector2f(positionX + BLOCK_SIZE / 2, positionY + BLOCK_SIZE / 2);
-    vert[3].position = sf::Vector2f(positionX - BLOCK_SIZE / 2, positionY + BLOCK_SIZE / 2);
+    vert[0].position = sf::Vector2f(positionX - CHARACTER_BLOCK_SIZE_X_OFFSET, positionY - CHARACTER_BLOCK_SIZE_Y_OFFSET);
+    vert[1].position = sf::Vector2f(positionX + CHARACTER_BLOCK_SIZE_X_OFFSET, positionY - CHARACTER_BLOCK_SIZE_Y_OFFSET);
+    vert[2].position = sf::Vector2f(positionX + CHARACTER_BLOCK_SIZE_X_OFFSET, positionY + CHARACTER_BLOCK_SIZE_Y_OFFSET);
+    vert[3].position = sf::Vector2f(positionX - CHARACTER_BLOCK_SIZE_X_OFFSET, positionY + CHARACTER_BLOCK_SIZE_Y_OFFSET);
 
     vert[0].texCoords = sf::Vector2f(tileState * tileSize.x, tileRow * tileSize.y);
     vert[1].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, tileRow * tileSize.y);

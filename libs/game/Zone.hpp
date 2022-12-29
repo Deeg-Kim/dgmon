@@ -7,14 +7,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "util/Util.hpp"
-#include "TextureLoader.hpp"
 #include "Block.hpp"
 #include "Tile.hpp"
 
 namespace DGMon {
     class Zone : public sf::Drawable, public sf::Transformable {
         public:
-            Zone(std::vector<Block> blocks);
+            Zone(std::vector<Block> blocks, sf::Texture);
             ~Zone();
             void load();
         private:

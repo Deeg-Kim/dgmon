@@ -7,6 +7,13 @@ project(DGMonProject)
 
 include_directories("/usr/local/include/freetype2")
 include(FetchContent)
+FetchContent_Declare(jsoncpp
+    GIT_REPOSITORY https://github.com/open-source-parsers/jsoncpp.git
+    GIT_TAG master)
+FetchContent_MakeAvailable(jsoncpp)
+get_target_property(JSON_INC_PATH jsoncpp_lib INTERFACE_INCLUDE_DIRECTORIES)
+include_directories(${JSON_INC_PATH})
+
 FetchContent_Declare(SFML
     GIT_REPOSITORY https://github.com/SFML/SFML.git
     GIT_TAG 2.6.x)

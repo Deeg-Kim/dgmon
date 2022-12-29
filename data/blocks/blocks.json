@@ -1,0 +1,9 @@
+{
+    "blocks": [
+        {
+            "name": "GRASS_STANDARD_1",
+            "tiles": ["GRASS_2", "GRASS_3", "GRASS_5", "GRASS_4"],
+            "height": 0
+        }
+    ]
+}

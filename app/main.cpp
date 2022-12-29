@@ -1,7 +1,6 @@
 #include "game/Game.hpp"
-#include "game/TextureLoader.hpp"
-#include "game/Zone.hpp"
 #include "util/Util.hpp"
+#include "data/LayoutLoader.hpp"
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
@@ -14,11 +13,12 @@ int main() {
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
 
+    LayoutLoader layoutLoader;
+
     Trainer trainer(1280 / 2, 960 / 2);
     trainer.refresh();
 
-    Zone zone1(std::vector<Block> {Block (std::vector<Tile> {GRASS_1, GRASS_2, GRASS_3, GRASS_4}, 0)});
-    zone1.load();
+    Zone zone = layoutLoader.getZone("pallet_town");
 
     // Flags for key pressed
     bool moving = false;
@@ -75,7 +75,7 @@ int main() {
         }
 
         window.clear();
-        window.draw(zone1);
+        window.draw(zone);
         window.draw(trainer);
         window.display();
     }

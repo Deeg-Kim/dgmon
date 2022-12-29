@@ -1,13 +1,10 @@
 #include "Block.hpp"
-#include "Block.hpp"
-#include "SFML/Graphics/Vertex.hpp"
-#include "SFML/System/Vector2.hpp"
-#include "util/Const.hpp"
 
 using namespace DGMon;
 
-Block::Block(std::vector<Tile> tiles, int height)
-:tiles(tiles)
+Block::Block(std::string name, std::vector<Tile> tiles, int height)
+:name(name)
+,tiles(tiles)
 ,height(height)
 {
 }
