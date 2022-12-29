@@ -1,6 +1,8 @@
 #include "LayoutLoader.hpp"
 #include "SFML/Graphics/Texture.hpp"
+#include "game/Tile.hpp"
 #include "util/Const.hpp"
+#include <utility>
 
 using namespace DGMon;
 
@@ -31,8 +33,19 @@ LayoutLoader::LayoutLoader() {
         for (auto tile : cur["tiles"]) {
             blockTiles.push_back(tiles.at(tile.asString()));
         }
-        int height = cur["height"].asInt();
-        blocks.insert({key, Block (blockTiles, height)});
+        std::vector<Tile> blockTiles3d {};
+        for (auto tile : cur["tiles3d"]) {
+            if (tile.asString() == "") {
+                blockTiles3d.push_back(TILE_NONE);
+            } else {
+                blockTiles3d.push_back(tiles.at(tile.asString()));
+            }
+        }
+        std::vector<int> heights {};
+        for (auto height : cur["heights"]) {
+            heights.push_back(height.asInt());
+        }
+        blocks.insert({key, Block (blockTiles, blockTiles3d, heights)});
     }
 
     // Load textures
@@ -40,6 +53,10 @@ LayoutLoader::LayoutLoader() {
     if (!outdoorTexture.loadFromFile("assets/tilesets/outside.png")) {
         std::cerr << "Failed to load outside texture\n";
     }
+
+    // Initialize player
+    Trainer trainer(1280 / 2, 960 / 2);
+    trainer.refresh();
 
     std::ifstream zonesFile("data/zones/zones.json");
     Json::Value zonesData;
@@ -51,9 +68,12 @@ LayoutLoader::LayoutLoader() {
         for (auto block : cur["blocks"]) {
             zoneBlocks.push_back(blocks.at(block.asString()));
         }
-        Zone z(zoneBlocks, outdoorTexture);
+        Zone z(zoneBlocks, outdoorTexture, trainer, false);
+        Zone z3d(zoneBlocks, outdoorTexture, trainer, true);
         z.load();
+        z3d.load();
         zones.insert({key, z});
+        zones3d.insert({key, z3d});
     }
 }
 
@@ -61,6 +81,6 @@ LayoutLoader::~LayoutLoader() {
     
 }
 
-Zone LayoutLoader::getZone(std::string zoneName) {
-    return zones.at(zoneName);
+std::pair<Zone, Zone> LayoutLoader::getZone(std::string zoneName) {
+    return std::make_pair(zones.at(zoneName), zones3d.at(zoneName));
 }

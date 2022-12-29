@@ -15,6 +15,7 @@ namespace DGMon {
     const int HEIGHT_BLOCKS = 30;
 
     enum TextureSource {
+        NO_TEXTURE,
         OUTSIDE
     };
 }

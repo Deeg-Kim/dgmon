@@ -18,7 +18,7 @@ int main() {
     Trainer trainer(1280 / 2, 960 / 2);
     trainer.refresh();
 
-    Zone zone = layoutLoader.getZone("pallet_town");
+    auto zones = layoutLoader.getZone("pallet_town");
 
     // Flags for key pressed
     bool moving = false;
@@ -75,8 +75,9 @@ int main() {
         }
 
         window.clear();
-        window.draw(zone);
+        window.draw(zones.first);
         window.draw(trainer);
+        window.draw(zones.second);
         window.display();
     }
 
