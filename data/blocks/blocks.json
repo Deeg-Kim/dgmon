@@ -1,9 +1,64 @@
 {
-    "blocks": [
-        {
-            "name": "GRASS_STANDARD_1",
-            "tiles": ["GRASS_2", "GRASS_3", "GRASS_5", "GRASS_4"],
-            "height": 0
-        }
-    ]
+    "SGRA1": {
+        "name": "Standard grass 1",
+        "tiles": ["GRASS_4", "GRASS_3", "GRASS_1", "GRASS_5"],
+        "height": 0
+    },
+
+    "GP2TL": {
+        "name": "Grass Path 2 width top left",
+        "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_3W_TM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
+        "height": 0
+    },
+    "GP2TM": {
+        "name": "Grass Path 2 width top middle",
+        "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
+        "height": 0
+    },
+    "GP2TR": {
+        "name": "Grass Path 2 width top right",
+        "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_2W_TR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
+        "height": 0
+    },
+    "GP2LM": {
+        "name": "Grass Path 2 width left middle",
+        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
+        "height": 0
+    },
+    "GP2RM": {
+        "name": "Grass Path 2 width right middle",
+        "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
+        "height": 0
+    },
+    "GP2BL": {
+        "name": "Grass Path 2 width bottom left",
+        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_BL", "GRASS_PATH_3W_BM"],
+        "height": 0
+    },
+    "GP2BM": {
+        "name": "Grass Path 2 width bottom middle",
+        "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_BM", "GRASS_PATH_3W_BM"],
+        "height": 0
+    },
+    "GP1WT": {
+        "name": "Grass Path 1 width top",
+        "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_2W_TR", "GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR"],
+        "height": 0
+    },
+    "GP1WM": {
+        "name": "Grass Path 1 width middle",
+        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR"],
+        "height": 0
+    },
+    "GP1WB": {
+        "name": "Grass Path 1 width bottom",
+        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR", "GRASS_PATH_2W_BL", "GRASS_PATH_2W_BR"],
+        "height": 0
+    },
+    
+    "GPJBR": {
+        "name": "Grass path bottom right",
+        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_1"],
+        "height": 0
+    }
 }

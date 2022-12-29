@@ -17,7 +17,7 @@ namespace DGMon {
             Zone getZone(std::string zoneName);
         private:
             std::unordered_map<std::string, Tile> tiles;
-            std::vector<Block> blocks;
+            std::unordered_map<std::string, Block> blocks;
             std::unordered_map<std::string, Zone> zones;
     };
 ;}

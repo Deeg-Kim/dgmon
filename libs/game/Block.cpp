@@ -2,9 +2,8 @@
 
 using namespace DGMon;
 
-Block::Block(std::string name, std::vector<Tile> tiles, int height)
-:name(name)
-,tiles(tiles)
+Block::Block(std::vector<Tile> tiles, int height)
+:tiles(tiles)
 ,height(height)
 {
 }

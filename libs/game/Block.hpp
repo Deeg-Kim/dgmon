@@ -9,7 +9,7 @@
 namespace DGMon {
     class Block {
         public:
-            Block(std::string name, std::vector<Tile> tiles, int height);
+            Block(std::vector<Tile> tiles, int height);
             ~Block();
             std::vector<sf::Vertex> getVertecies(int initX, int initY);
             std::string name;

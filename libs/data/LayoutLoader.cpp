@@ -19,20 +19,20 @@ LayoutLoader::LayoutLoader() {
         tiles.insert({key, t});
     }
 
-    std::vector<Block> blocks;
+    std::unordered_map<std::string, Block> blocks;
 
     std::ifstream blocksFile("data/blocks/blocks.json");
     Json::Value blockData;
     reader.parse(blocksFile, blockData);
     
-    for (auto value : blockData["blocks"]) {
-        std::string name = value["name"].asString();
+    for (auto key : blockData.getMemberNames()) {
+        auto cur = blockData[key];
         std::vector<Tile> blockTiles {};
-        for (auto tile : value["tiles"]) {
+        for (auto tile : cur["tiles"]) {
             blockTiles.push_back(tiles.at(tile.asString()));
         }
-        int height = value["height"].asInt();
-        blocks.push_back(Block (name, blockTiles, height));
+        int height = cur["height"].asInt();
+        blocks.insert({key, Block (blockTiles, height)});
     }
 
     // Load textures
@@ -49,7 +49,7 @@ LayoutLoader::LayoutLoader() {
         auto cur = zonesData[key];
         std::vector<Block> zoneBlocks {};
         for (auto block : cur["blocks"]) {
-            zoneBlocks.push_back(blocks.at(block.asInt()));
+            zoneBlocks.push_back(blocks.at(block.asString()));
         }
         Zone z(zoneBlocks, outdoorTexture);
         z.load();

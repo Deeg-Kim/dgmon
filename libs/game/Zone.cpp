@@ -35,8 +35,7 @@ void Zone::load()
 
     for (int i = 0; i < WIDTH_BLOCKS; i++) {
         for (int j = 0; j < HEIGHT_BLOCKS; j++) {
-             // TODO: Fix when blocks are defined better
-            Block cur = blocks.at(0);
+            Block cur = blocks.at(i + j * WIDTH_BLOCKS);
             for (auto v : cur.getVertecies(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
                 vertices.append(v);
             }
