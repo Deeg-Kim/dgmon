@@ -5,8 +5,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
-#include <json/json.h>
 #include <fstream>
+#include <memory>
+#include <json/json.h>
 #include <SFML/Graphics.hpp>
 
 namespace DGMon {
@@ -14,9 +15,9 @@ namespace DGMon {
         public:
             LayoutLoader();
             ~LayoutLoader();
-            Layout getLayout(std::string zoneName);
+            std::shared_ptr<Layout> getLayout(std::string zoneName);
         private:
-            std::unordered_map<std::string, Layout> layouts;
+            std::unordered_map<std::string, std::shared_ptr<Layout>> layouts;
     };
 ;}
 

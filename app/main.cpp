@@ -69,11 +69,11 @@ int main() {
         }
 
         if (moving) {
-            layout.movePrimaryPlayer(dir);
+            layout->movePrimaryPlayer(dir);
         }
 
         window.clear();
-        layout.draw(&window);
+        layout->draw(&window);
         window.display();
     }
 

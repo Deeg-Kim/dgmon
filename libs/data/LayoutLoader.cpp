@@ -1,13 +1,12 @@
 #include "LayoutLoader.hpp"
-#include "SFML/Graphics/Texture.hpp"
 #include "game/Tile.hpp"
-#include "util/Const.hpp"
-#include <utility>
+#include <memory>
 
 using namespace DGMon;
 
 LayoutLoader::LayoutLoader() {
-    std::unordered_map<std::string, Tile> tiles;
+    const std::shared_ptr<Tile> TILE_NONE_PTR = std::make_shared<Tile>(OUTSIDE, 0, 0, sf::Color(0, 0, 0, 0));
+    std::unordered_map<std::string, std::shared_ptr<Tile>> tiles;
     Json::Reader reader;
 
     // TODO: Generalize to more texture sources
@@ -17,11 +16,11 @@ LayoutLoader::LayoutLoader() {
 
     for (auto key : tileData.getMemberNames()) {
         auto cur = tileData[key];
-        Tile t {OUTSIDE, cur["texX"].asInt(), cur["texY"].asInt(), sf::Color::White};
+        auto t = std::make_shared<Tile>(OUTSIDE, cur["texX"].asInt(), cur["texY"].asInt(), sf::Color::White);
         tiles.insert({key, t});
     }
-
-    std::unordered_map<std::string, Block> blocks;
+    
+    std::unordered_map<std::string, std::shared_ptr<Block>> blocks;
 
     std::ifstream blocksFile("data/blocks/blocks.json");
     Json::Value blockData;
@@ -29,10 +28,10 @@ LayoutLoader::LayoutLoader() {
     
     for (auto key : blockData.getMemberNames()) {
         auto cur = blockData[key];
-        std::vector<Tile> blockTiles;
+        std::vector<std::shared_ptr<Tile>> blockTiles;
         for (auto tile : cur["tiles"]) {
             if (tile.asString() == "") {
-                blockTiles.push_back(TILE_NONE);
+                blockTiles.push_back(TILE_NONE_PTR);
             } else {
                 blockTiles.push_back(tiles.at(tile.asString()));
             }
@@ -41,7 +40,8 @@ LayoutLoader::LayoutLoader() {
         for (auto height : cur["heights"]) {
             heights.push_back(height.asInt());
         }
-        blocks.insert({key, Block (blockTiles, heights)});
+        auto name = cur["name"].asString();
+        blocks[key] = std::move(std::make_shared<Block>(name, blockTiles, heights));
     }
 
     // Load textures
@@ -56,25 +56,23 @@ LayoutLoader::LayoutLoader() {
 
     for (auto key : zonesData.getMemberNames()) {
         auto cur = zonesData[key];
-        std::vector<Block> layer0Blocks;
+        std::vector<std::shared_ptr<Block>> layer0Blocks;
         for (auto block : cur["layer0"]) {
             layer0Blocks.push_back(blocks.at(block.asString()));
         }
-        std::vector<Block> layer1Blocks;
+        std::vector<std::shared_ptr<Block>> layer1Blocks;
         for (auto block : cur["layer1"]) {
             layer1Blocks.push_back(blocks.at(block.asString()));
         }
-        std::vector<Block> layer2Blocks;
+        std::vector<std::shared_ptr<Block>> layer2Blocks;
         for (auto block : cur["layer2"]) {
             layer2Blocks.push_back(blocks.at(block.asString()));
         }
-        Zone z0(layer0Blocks, outdoorTexture);
-        z0.load();
-        Zone z1(layer1Blocks, outdoorTexture);
-        z1.load();
-        Zone z2(layer2Blocks, outdoorTexture);
-        z2.load();
-        layouts.insert({key, Layout (z0, z1, z2)});
+        auto z0 = std::shared_ptr<Zone>(new Zone(layer0Blocks, outdoorTexture));
+        auto z1 = std::shared_ptr<Zone>(new Zone(layer1Blocks, outdoorTexture));
+        auto z2 = std::shared_ptr<Zone>(new Zone(layer2Blocks, outdoorTexture));
+        std::shared_ptr<Layout> layout = std::make_shared<Layout>(z0, z1, z2);
+        layouts.insert({key, layout});
     }
 }
 
@@ -82,6 +80,6 @@ LayoutLoader::~LayoutLoader() {
     
 }
 
-Layout LayoutLoader::getLayout(std::string zoneName) {
+std::shared_ptr<Layout> LayoutLoader::getLayout(std::string zoneName) {
     return layouts.at(zoneName);
 }

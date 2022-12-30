@@ -11,6 +11,11 @@
         "heights": [0, 0, 0, 0]
     },
 
+    "GPBLOK": {
+        "name": "Grass path block",
+        "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
+        "heights": [0, 0, 0, 0]
+    },
     "GP2TL1": {
         "name": "Grass Path 2 width top left",
         "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_3W_TM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
@@ -46,30 +51,34 @@
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_BM", "GRASS_PATH_3W_BM"],
         "heights": [0, 0, 0, 0]
     },
-    "GP1WT1": {
-        "name": "Grass Path 1 width top",
-        "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_2W_TR", "GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR"],
-        "heights": [0, 0, 0, 0]
+    "GP1WT2": {
+        "name": "Grass Path 1 width top (bottom oriented)",
+        "tiles": ["GRASS_4", "GRASS_3", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM"]
     },
-    "GP1WM1": {
-        "name": "Grass Path 1 width middle",
+    "GP1WM3": {
+        "name": "Grass Path 1 width middle (left oriented)",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR"],
         "heights": [0, 0, 0, 0]
     },
-    "GP1WB1": {
-        "name": "Grass Path 1 width bottom",
-        "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR", "GRASS_PATH_2W_BL", "GRASS_PATH_2W_BR"],
-        "heights": [0, 0, 0, 0]
-    },
     
-    "GPJBR1": {
-        "name": "Grass path joint bottom right",
+    "GPJBR2": {
+        "name": "Grass path joint bottom right (1 -> 2 CW)",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_1"],
         "heights": [0, 0, 0, 0]
     },
     "GPJTR1": {
-        "name": "Grass path joint top right",
+        "name": "Grass path joint top right (2 -> 1 CW)",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_3"],
+        "heights": [0, 0, 0, 0]
+    },
+    "GPJTR2": {
+        "name": "Grass path joint top right (1 -> 2 CW)",
+        "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MR", "GRASS_PATH_3W_MM", "GRASS_PATH_JOINT_3"],
+        "heights": [0, 0, 0, 0]
+    },
+    "GPJTL3": {
+        "name": "Grass path joint top left (0.5 -> 1 CW)",
+        "tiles": ["GRASS_3", "GRASS_PATH_3W_ML", "GRASS_PATH_3W_TM", "GRASS_PATH_JOINT_4"],
         "heights": [0, 0, 0, 0]
     },
 
@@ -110,12 +119,12 @@
     },
     "HBBOL2": {
         "name": "House big bottom left orientation",
-        "tiles": ["HOUSE_BIG_L_7", "HOUSE_BIG_L_8", "GRASS_1", "GRASS_5"],
+        "tiles": ["HOUSE_BIG_L_7", "HOUSE_BIG_L_8", "", ""],
         "heights": [0, 0, 0, 0]
     },
     "HBBOL3": {
         "name": "House big bottom left orientation",
-        "tiles": ["HOUSE_BIG_L_9", "HOUSE_BIG_L_10", "GRASS_1", "GRASS_5"],
+        "tiles": ["HOUSE_BIG_L_9", "HOUSE_BIG_L_10", "", ""],
         "heights": [0, 0, 0, 0]
     }
 }

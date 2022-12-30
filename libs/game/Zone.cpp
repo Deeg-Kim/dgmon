@@ -3,7 +3,7 @@
 
 using namespace DGMon;
 
-Zone::Zone(std::vector<Block> blocks, sf::Texture texture)
+Zone::Zone(std::vector<std::shared_ptr<Block>> blocks, sf::Texture texture)
 :blocks(blocks)
 ,vertices(sf::VertexArray ())
 ,texture(texture)
@@ -12,6 +12,8 @@ Zone::Zone(std::vector<Block> blocks, sf::Texture texture)
 
 Zone::~Zone() 
 {
+    std::vector<std::shared_ptr<Block>>().swap(blocks);
+    sf::Texture().swap(texture);
 }
 
 void Zone::load() 
@@ -22,8 +24,8 @@ void Zone::load()
 
     for (int i = 0; i < WIDTH_BLOCKS; i++) {
         for (int j = 0; j < HEIGHT_BLOCKS; j++) {
-            Block block = blocks.at(i + j * WIDTH_BLOCKS);
-            for (auto v : block.getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
+            auto block = blocks.at(i + j * WIDTH_BLOCKS);
+            for (auto v : block->getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
                 vertices.append(v);
             }
         }
@@ -66,13 +68,13 @@ int Zone::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir
         for (int i = tilesStartY; i <= tilesEndY; i++) {
             int blockX = floor(static_cast<double>(tilesStartX) / 2);
             int blockY = floor(static_cast<double>(i) / 2);
-            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY).heights.at(getTileIdx(tilesStartX, i)));
+            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY)->heights.at(getTileIdx(tilesStartX, i)));
         }
     } else if (tilesStartY == tilesEndY) {
         for (int i = tilesStartX; i <= tilesEndX; i++) {
             int blockX = floor(static_cast<double>(i) / 2);
             int blockY = floor(static_cast<double>(tilesStartY) / 2);
-            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY).heights.at(getTileIdx(i, tilesStartY)));
+            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY)->heights.at(getTileIdx(i, tilesStartY)));
         }
     }
 
