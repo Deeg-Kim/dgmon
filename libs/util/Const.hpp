@@ -11,7 +11,7 @@ namespace DGMon {
     const int CHARACTER_BLOCK_SIZE_X = 32;
     const int CHARACTER_BLOCK_SIZE_Y = 48;
     const int CHARACTER_HITBOX_SIZE_X_OFFSET = 18;
-    const int CHARACTER_HITBOX_SIZE_Y_OFFSET = 20;
+    const int CHARACTER_HITBOX_SIZE_Y_OFFSET = 24;
 
     const int WIDTH_BLOCKS = 40;
     const int HEIGHT_BLOCKS = 22;

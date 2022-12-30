@@ -1,4 +1,5 @@
 #include "Zone.hpp"
+#include "util/Const.hpp"
 
 using namespace DGMon;
 
@@ -54,20 +55,28 @@ int Zone::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir
         return INFINITE_HEIGHT;
     }
 
-    int tilesX1 = floor(static_cast<double>(edge.first.x) / TILE_MAP_TILE_SIZE);
-    int tilesY1 = floor(static_cast<double>(edge.first.y) / TILE_MAP_TILE_SIZE);
-    int tilesX2 = floor(static_cast<double>(edge.second.x) / TILE_MAP_TILE_SIZE);
-    int tilesY2 = floor(static_cast<double>(edge.second.y) / TILE_MAP_TILE_SIZE);
+    int tilesStartX = floor(static_cast<double>(edge.first.x) / TILE_MAP_TILE_SIZE);
+    int tilesStartY = floor(static_cast<double>(edge.first.y) / TILE_MAP_TILE_SIZE);
+    int tilesEndX = floor(static_cast<double>(edge.second.x) / TILE_MAP_TILE_SIZE);
+    int tilesEndY = floor(static_cast<double>(edge.second.y) / TILE_MAP_TILE_SIZE);
 
-    int block1X = floor(static_cast<double>(tilesX1) / 2);
-    int block1Y = floor(static_cast<double>(tilesY1) / 2);
-    int block2X = floor(static_cast<double>(tilesX2) / 2);
-    int block2Y = floor(static_cast<double>(tilesY2) / 2);
+    int max = 0;
 
-    int tile1Height = blocks.at(block1X + WIDTH_BLOCKS * block1Y).heights.at(getTileIdx(tilesX1, tilesY1));
-    int tile2Height = blocks.at(block2X + WIDTH_BLOCKS * block2Y).heights.at(getTileIdx(tilesX2, tilesY2));
+    if (tilesStartX == tilesEndX) {
+        for (int i = tilesStartY; i <= tilesEndY; i++) {
+            int blockX = floor(static_cast<double>(tilesStartX) / 2);
+            int blockY = floor(static_cast<double>(i) / 2);
+            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY).heights.at(getTileIdx(tilesStartX, i)));
+        }
+    } else if (tilesStartY == tilesEndY) {
+        for (int i = tilesStartX; i <= tilesEndX; i++) {
+            int blockX = floor(static_cast<double>(i) / 2);
+            int blockY = floor(static_cast<double>(tilesStartY) / 2);
+            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY).heights.at(getTileIdx(i, tilesStartY)));
+        }
+    }
 
-    return std::max(tile1Height, tile2Height);
+    return max;
 }
 
 void Zone::draw(sf::RenderTarget& target, sf::RenderStates states) const
