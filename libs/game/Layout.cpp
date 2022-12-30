@@ -5,9 +5,10 @@
 
 using namespace DGMon;
 
-Layout::Layout(Zone layer0, Zone layer1) 
+Layout::Layout(Zone layer0, Zone layer1, Zone layer2) 
 :layer0(layer0)
 ,layer1(layer1)
+,layer2(layer2)
 ,trainer(Trainer (1280 / 2, 704 / 2))
 {
     trainer.refresh();
@@ -19,12 +20,13 @@ Layout::~Layout()
 
 void Layout::draw(sf::RenderWindow* window) {
     window->draw(layer0);
-    window->draw(trainer);
     window->draw(layer1);
+    window->draw(trainer);
+    window->draw(layer2);
 }
 
 void Layout::movePrimaryPlayer(Direction dir) {
-    int collisionHeight = layer1.getMaxHeight(getTrainerEdge(dir), dir);
+    int collisionHeight = std::max(layer1.getMaxHeight(getTrainerEdge(dir), dir), layer2.getMaxHeight(getTrainerEdge(dir), dir));
     if (trainer.getHeight() >= collisionHeight) {
         trainer.move(dir);
     }

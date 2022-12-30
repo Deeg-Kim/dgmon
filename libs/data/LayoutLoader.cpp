@@ -64,11 +64,17 @@ LayoutLoader::LayoutLoader() {
         for (auto block : cur["layer1"]) {
             layer1Blocks.push_back(blocks.at(block.asString()));
         }
-        Zone z1(layer0Blocks, outdoorTexture);
+        std::vector<Block> layer2Blocks;
+        for (auto block : cur["layer2"]) {
+            layer2Blocks.push_back(blocks.at(block.asString()));
+        }
+        Zone z0(layer0Blocks, outdoorTexture);
+        z0.load();
+        Zone z1(layer1Blocks, outdoorTexture);
         z1.load();
-        Zone z2(layer1Blocks, outdoorTexture);
+        Zone z2(layer2Blocks, outdoorTexture);
         z2.load();
-        layouts.insert({key, Layout (z1, z2)});
+        layouts.insert({key, Layout (z0, z1, z2)});
     }
 }
 

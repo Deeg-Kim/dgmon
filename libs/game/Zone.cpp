@@ -35,9 +35,9 @@ int getTileIdx(int x, int y) {
 
     if (xR == 0 && yR == 0) {
         return 0;
-    } else if (xR == 0 && yR == 1) {
-        return 1;
     } else if (xR == 1 && yR == 0) {
+        return 1;
+    } else if (xR == 0 && yR == 1) {
         return 2;
     } else {
         return 3;

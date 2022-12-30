@@ -105,7 +105,7 @@
     },
     "HBBOL1": {
         "name": "House big bottom left orientation",
-        "tiles": ["MAILBOX_2", "HOUSE_BIG_L_6", "GRASS_1", "GRASS_5"],
+        "tiles": ["MAILBOX_2", "HOUSE_BIG_L_6", "", ""],
         "heights": [0, 0, 0, 0]
     },
     "HBBOL2": {
@@ -118,9 +118,9 @@
         "tiles": ["HOUSE_BIG_L_9", "HOUSE_BIG_L_10", "GRASS_1", "GRASS_5"],
         "heights": [0, 0, 0, 0]
     },
-    "HBBOL4": {
-        "name": "House big bottom left orientation (mailbox)",
-        "tiles": ["", "", "", ""],
-        "heights": [0, 0, 0, 0]
+    "HMAIL1": {
+        "name": "House mail top collision",
+        "tiles": ["", "", "MAILBOX_1", ""],
+        "heights": [0, 0, 1, 0]
     }
 }
