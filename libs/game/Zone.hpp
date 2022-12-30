@@ -4,20 +4,21 @@
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <cmath>
+#include <algorithm>
 
 #include <SFML/Graphics.hpp>
 #include "util/Util.hpp"
 #include "Block.hpp"
 #include "Tile.hpp"
-#include "Trainer.hpp"
 
 namespace DGMon {
     class Zone : public sf::Drawable, public sf::Transformable {
         public:
-            Zone(std::vector<Block> blocks, sf::Texture texture, Trainer trainer);
+            Zone(std::vector<Block> blocks, sf::Texture texture);
             ~Zone();
             void load();
-            Trainer trainer;
+            int getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir);
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const;
             std::vector<Block> blocks;

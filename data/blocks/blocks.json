@@ -2,120 +2,125 @@
     "000000": {
         "name": "Transparent block",
         "tiles": ["", "", "", ""],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
 
     "GRASS1": {
         "name": "Standard grass 1",
         "tiles": ["GRASS_4", "GRASS_3", "GRASS_1", "GRASS_5"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
 
     "GP2TL1": {
         "name": "Grass Path 2 width top left",
         "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_3W_TM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2TM1": {
         "name": "Grass Path 2 width top middle",
         "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2TR1": {
         "name": "Grass Path 2 width top right",
         "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_2W_TR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2LM1": {
         "name": "Grass Path 2 width left middle",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2RM1": {
         "name": "Grass Path 2 width right middle",
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2BL1": {
         "name": "Grass Path 2 width bottom left",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_BL", "GRASS_PATH_3W_BM"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP2BM1": {
         "name": "Grass Path 2 width bottom middle",
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_BM", "GRASS_PATH_3W_BM"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP1WT1": {
         "name": "Grass Path 1 width top",
         "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_2W_TR", "GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP1WM1": {
         "name": "Grass Path 1 width middle",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GP1WB1": {
         "name": "Grass Path 1 width bottom",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR", "GRASS_PATH_2W_BL", "GRASS_PATH_2W_BR"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     
     "GPJBR1": {
         "name": "Grass path joint bottom right",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_1"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "GPJTR1": {
         "name": "Grass path joint top right",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_3"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
 
     "HBRED1": {
         "name": "House big red top right",
         "tiles": ["", "HOUSE_BIG_ROOF_RED_1", "", "HOUSE_BIG_ROOF_RED_6"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "HBRED2": {
         "name": "House big red top middle",
         "tiles": ["HOUSE_BIG_ROOF_RED_2", "HOUSE_BIG_ROOF_RED_3", "HOUSE_BIG_ROOF_RED_7", "HOUSE_BIG_ROOF_RED_8"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "HBRED3": {
         "name": "House big red top right",
         "tiles": ["HOUSE_BIG_ROOF_RED_4", "HOUSE_BIG_ROOF_RED_5", "HOUSE_BIG_ROOF_RED_9", "HOUSE_BIG_ROOF_RED_10"],
-        "height": [0, 0, 0, 0]
+        "heights": [0, 0, 0, 0]
     },
     "HBRED4": {
         "name": "House big red middle left",
         "tiles": ["", "HOUSE_BIG_ROOF_RED_11", "MAILBOX_1", "HOUSE_BIG_L_1"],
-        "height": [0, 1, 1, 1]
+        "heights": [0, 1, 1, 1]
     },
     "HBRED5": {
         "name": "House big red middle middle",
         "tiles": ["HOUSE_BIG_ROOF_RED_12", "HOUSE_BIG_ROOF_RED_13", "HOUSE_BIG_L_2", "HOUSE_BIG_L_3"],
-        "height": [1, 1, 1, 1]
+        "heights": [1, 1, 1, 1]
     },
     "HBRED6": {
         "name": "House big red middle right",
         "tiles": ["HOUSE_BIG_ROOF_RED_14", "HOUSE_BIG_ROOF_RED_15", "HOUSE_BIG_L_4", "HOUSE_BIG_L_5"],
-        "height": [1, 1, 1, 1]
+        "heights": [1, 1, 1, 1]
     },
     "HBBOL1": {
         "name": "House big bottom left orientation",
-        "tiles": ["MAILBOX_2", "HOUSE_BIG_L_6", "", ""],
-        "height": [1, 1, 0, 0]
+        "tiles": ["MAILBOX_2", "HOUSE_BIG_L_6", "GRASS_1", "GRASS_5"],
+        "heights": [0, 0, 0, 0]
     },
     "HBBOL2": {
         "name": "House big bottom left orientation",
-        "tiles": ["HOUSE_BIG_L_7", "HOUSE_BIG_L_8", "", ""],
-        "height": [1, 1, 0, 0]
+        "tiles": ["HOUSE_BIG_L_7", "HOUSE_BIG_L_8", "GRASS_1", "GRASS_5"],
+        "heights": [0, 0, 0, 0]
     },
     "HBBOL3": {
         "name": "House big bottom left orientation",
-        "tiles": ["HOUSE_BIG_L_9", "HOUSE_BIG_L_10", "", ""],
-        "height": [1, 1, 0, 0]
+        "tiles": ["HOUSE_BIG_L_9", "HOUSE_BIG_L_10", "GRASS_1", "GRASS_5"],
+        "heights": [0, 0, 0, 0]
+    },
+    "HBBOL4": {
+        "name": "House big bottom left orientation (mailbox)",
+        "tiles": ["", "", "", ""],
+        "heights": [0, 0, 0, 0]
     }
 }

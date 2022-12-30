@@ -14,12 +14,9 @@ namespace DGMon {
         public:
             LayoutLoader();
             ~LayoutLoader();
-            std::pair<Zone, Zone> getZone(std::string zoneName);
+            Layout getLayout(std::string zoneName);
         private:
-            std::unordered_map<std::string, Tile> tiles;
-            std::unordered_map<std::string, Block> blocks;
-            std::unordered_map<std::string, Zone> zonesLayer0;
-            std::unordered_map<std::string, Zone> zonesLayer1;
+            std::unordered_map<std::string, Layout> layouts;
     };
 ;}
 

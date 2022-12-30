@@ -1,3 +1,4 @@
+#include "SFML/Graphics/Drawable.hpp"
 #include "game/Game.hpp"
 #include "util/Util.hpp"
 #include "data/LayoutLoader.hpp"
@@ -8,17 +9,14 @@ using namespace std;
 using namespace DGMon;
 
 int main() {
-    auto window = sf::RenderWindow{ { 1280u, 960u }, "DG Mon"};
+    auto window = sf::RenderWindow{ { 1280u, 704u }, "DG Mon"};
     window.setFramerateLimit(24);
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
 
     LayoutLoader layoutLoader;
 
-    Trainer trainer(1280 / 2, 960 / 2);
-    trainer.refresh();
-
-    auto zones = layoutLoader.getZone("pallet_town");
+    auto layout = layoutLoader.getLayout("pallet_town");
 
     // Flags for key pressed
     bool moving = false;
@@ -71,13 +69,11 @@ int main() {
         }
 
         if (moving) {
-            trainer.move(dir);
+            layout.movePrimaryPlayer(dir);
         }
 
         window.clear();
-        window.draw(zones.first);
-        window.draw(trainer);
-        window.draw(zones.second);
+        layout.draw(&window);
         window.display();
     }
 

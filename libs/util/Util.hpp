@@ -3,5 +3,7 @@
 
 #include "Const.hpp"
 #include "Direction.hpp"
+#include "Collidable.hpp"
+#include "Movable.hpp"
 
 #endif

@@ -29,7 +29,7 @@ LayoutLoader::LayoutLoader() {
     
     for (auto key : blockData.getMemberNames()) {
         auto cur = blockData[key];
-        std::vector<Tile> blockTiles {};
+        std::vector<Tile> blockTiles;
         for (auto tile : cur["tiles"]) {
             if (tile.asString() == "") {
                 blockTiles.push_back(TILE_NONE);
@@ -50,30 +50,25 @@ LayoutLoader::LayoutLoader() {
         std::cerr << "Failed to load outside texture\n";
     }
 
-    // Initialize player
-    Trainer trainer(1280 / 2, 960 / 2);
-    trainer.refresh();
-
     std::ifstream zonesFile("data/zones/zones.json");
     Json::Value zonesData;
     reader.parse(zonesFile, zonesData);
 
     for (auto key : zonesData.getMemberNames()) {
         auto cur = zonesData[key];
-        std::vector<Block> layer0Blocks {};
+        std::vector<Block> layer0Blocks;
         for (auto block : cur["layer0"]) {
             layer0Blocks.push_back(blocks.at(block.asString()));
         }
-        std::vector<Block> layer1Blocks {};
+        std::vector<Block> layer1Blocks;
         for (auto block : cur["layer1"]) {
             layer1Blocks.push_back(blocks.at(block.asString()));
         }
-        Zone z1(layer0Blocks, outdoorTexture, trainer);
+        Zone z1(layer0Blocks, outdoorTexture);
         z1.load();
-        Zone z2(layer1Blocks, outdoorTexture, trainer);
+        Zone z2(layer1Blocks, outdoorTexture);
         z2.load();
-        zonesLayer0.insert({key, z1});
-        zonesLayer1.insert({key, z2});
+        layouts.insert({key, Layout (z1, z2)});
     }
 }
 
@@ -81,6 +76,6 @@ LayoutLoader::~LayoutLoader() {
     
 }
 
-std::pair<Zone, Zone> LayoutLoader::getZone(std::string zoneName) {
-    return std::make_pair(zonesLayer0.at(zoneName), zonesLayer1.at(zoneName));
+Layout LayoutLoader::getLayout(std::string zoneName) {
+    return layouts.at(zoneName);
 }
