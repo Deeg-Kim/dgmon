@@ -18,8 +18,8 @@ namespace DGMon {
         private:
             std::unordered_map<std::string, Tile> tiles;
             std::unordered_map<std::string, Block> blocks;
-            std::unordered_map<std::string, Zone> zones;
-            std::unordered_map<std::string, Zone> zones3d;
+            std::unordered_map<std::string, Zone> zonesLayer0;
+            std::unordered_map<std::string, Zone> zonesLayer1;
     };
 ;}
 

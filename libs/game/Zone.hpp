@@ -14,7 +14,7 @@
 namespace DGMon {
     class Zone : public sf::Drawable, public sf::Transformable {
         public:
-            Zone(std::vector<Block> blocks, sf::Texture texture, Trainer trainer, bool mode3d);
+            Zone(std::vector<Block> blocks, sf::Texture texture, Trainer trainer);
             ~Zone();
             void load();
             Trainer trainer;
@@ -23,7 +23,6 @@ namespace DGMon {
             std::vector<Block> blocks;
             sf::Texture texture;
             sf::VertexArray vertices;
-            bool mode3d;
     };
 };
 

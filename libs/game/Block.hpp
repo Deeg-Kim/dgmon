@@ -9,14 +9,12 @@
 namespace DGMon {
     class Block {
         public:
-            Block(std::vector<Tile> tiles, std::vector<Tile> tiles3d, std::vector<int> heights);
+            Block(std::vector<Tile> tiles, std::vector<int> heights);
             ~Block();
             std::vector<sf::Vertex> getVertices(int initX, int initY);
-            std::vector<sf::Vertex> get3dVertices(int initX, int initY);
             std::string name;
         private:
             std::vector<Tile> tiles;
-            std::vector<Tile> tiles3d;
             std::vector<int> heights;
     };
 };

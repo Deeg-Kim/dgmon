@@ -6,12 +6,11 @@
 
 using namespace DGMon;
 
-Zone::Zone(std::vector<Block> blocks, sf::Texture texture, Trainer trainer, bool mode3d)
+Zone::Zone(std::vector<Block> blocks, sf::Texture texture, Trainer trainer)
 :blocks(blocks)
 ,vertices(sf::VertexArray ())
 ,texture(texture)
 ,trainer(trainer)
-,mode3d(mode3d)
 {
 }
 
@@ -28,9 +27,7 @@ void Zone::load()
     for (int i = 0; i < WIDTH_BLOCKS; i++) {
         for (int j = 0; j < HEIGHT_BLOCKS; j++) {
             Block block = blocks.at(i + j * WIDTH_BLOCKS);
-            auto cur = mode3d ? block.get3dVertices(i * BLOCK_SIZE, j * BLOCK_SIZE) : block.getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE);
-
-            for (auto v : cur) {
+            for (auto v : block.getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
                 vertices.append(v);
             }
         }

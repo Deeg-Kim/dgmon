@@ -47,7 +47,11 @@
     "GRASS_PATH_JOINT_1": {
         "texX": 5,
         "texY": 1  
-      },
+    }, 
+    "GRASS_PATH_JOINT_2": {
+        "texX": 6,
+        "texY": 1  
+    },
 
     "GRASS_PATH_3W_ML": {
         "texX": 0,
@@ -68,6 +72,14 @@
     "GRASS_PATH_2W_MR": {
         "texX": 4,
         "texY": 2
+    },
+    "GRASS_PATH_JOINT_3": {
+        "texX": 5,
+        "texY": 2  
+    },
+    "GRASS_PATH_JOINT_4": {
+        "texX": 6,
+        "texY": 2  
     },
 
     "GRASS_PATH_3W_BL": {
@@ -90,46 +102,144 @@
         "texX": 4,
         "texY": 3
     },
+    "GRASS_PATH_JOINT_5": {
+        "texX": 5,
+        "texY": 3  
+    },
+    "GRASS_PATH_JOINT_6": {
+        "texX": 6,
+        "texY": 3  
+    },
 
-    "HOUSE_BIG_RED_1": {
+    "GRASS_PATH_JOINT_7": {
+        "texX": 3,
+        "texY": 4  
+    },
+    "GRASS_PATH_JOINT_8": {
+        "texX": 4,
+        "texY": 4  
+    },
+    "GRASS_PATH_JOINT_9": {
+        "texX": 4,
+        "texY": 4  
+    },
+    "GRASS_PATH_JOINT_10": {
+        "texX": 5,
+        "texY": 4  
+    },
+
+    "MAILBOX_1": {
+        "texX": 2,
+        "texY": 120
+    },
+
+    "MAILBOX_2": {
+        "texX": 2,
+        "texY": 121
+    },
+
+    "HOUSE_BIG_ROOF_RED_1": {
         "texX": 0,
         "texY": 197
     },
-    "HOUSE_BIG_RED_2": {
+    "HOUSE_BIG_ROOF_RED_2": {
         "texX": 1,
         "texY": 197
     },
-    "HOUSE_BIG_RED_3": {
+    "HOUSE_BIG_ROOF_RED_3": {
         "texX": 2,
         "texY": 197
     },
-    "HOUSE_BIG_RED_4": {
+    "HOUSE_BIG_ROOF_RED_4": {
         "texX": 3,
         "texY": 197
     },
-    "HOUSE_BIG_RED_5": {
+    "HOUSE_BIG_ROOF_RED_5": {
         "texX": 4,
         "texY": 197
     },
 
-    "HOUSE_BIG_RED_6": {
+    "HOUSE_BIG_ROOF_RED_6": {
         "texX": 0,
         "texY": 198
     },
-    "HOUSE_BIG_RED_7": {
+    "HOUSE_BIG_ROOF_RED_7": {
         "texX": 1,
         "texY": 198
     },
-    "HOUSE_BIG_RED_8": {
+    "HOUSE_BIG_ROOF_RED_8": {
         "texX": 2,
         "texY": 198
     },
-    "HOUSE_BIG_RED_9": {
+    "HOUSE_BIG_ROOF_RED_9": {
         "texX": 3,
         "texY": 198
     },
-    "HOUSE_BIG_RED_10": {
+    "HOUSE_BIG_ROOF_RED_10": {
         "texX": 4,
         "texY": 198
-    }
+    },
+
+    "HOUSE_BIG_ROOF_RED_11": {
+        "texX": 0,
+        "texY": 199
+    },
+    "HOUSE_BIG_ROOF_RED_12": {
+        "texX": 1,
+        "texY": 199
+    },
+    "HOUSE_BIG_ROOF_RED_13": {
+        "texX": 2,
+        "texY": 199
+    },
+    "HOUSE_BIG_ROOF_RED_14": {
+        "texX": 3,
+        "texY": 199
+    },
+    "HOUSE_BIG_ROOF_RED_15": {
+        "texX": 4,
+        "texY": 199
+    },
+
+    "HOUSE_BIG_L_1": {
+        "texX": 0,
+        "texY": 200
+    },
+    "HOUSE_BIG_L_2": {
+        "texX": 1,
+        "texY": 200
+    },
+    "HOUSE_BIG_L_3": {
+        "texX": 2,
+        "texY": 200
+    },
+    "HOUSE_BIG_L_4": {
+        "texX": 3,
+        "texY": 200
+    },
+    "HOUSE_BIG_L_5": {
+        "texX": 4,
+        "texY": 200
+    },
+
+    "HOUSE_BIG_L_6": {
+        "texX": 0,
+        "texY": 201
+    },
+    "HOUSE_BIG_L_7": {
+        "texX": 1,
+        "texY": 201
+    },
+    "HOUSE_BIG_L_8": {
+        "texX": 2,
+        "texY": 201
+    },
+    "HOUSE_BIG_L_9": {
+        "texX": 3,
+        "texY": 201
+    },
+    "HOUSE_BIG_L_10": {
+        "texX": 4,
+        "texY": 201
+    }   
 }

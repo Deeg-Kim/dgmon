@@ -31,21 +31,17 @@ LayoutLoader::LayoutLoader() {
         auto cur = blockData[key];
         std::vector<Tile> blockTiles {};
         for (auto tile : cur["tiles"]) {
-            blockTiles.push_back(tiles.at(tile.asString()));
-        }
-        std::vector<Tile> blockTiles3d {};
-        for (auto tile : cur["tiles3d"]) {
             if (tile.asString() == "") {
-                blockTiles3d.push_back(TILE_NONE);
+                blockTiles.push_back(TILE_NONE);
             } else {
-                blockTiles3d.push_back(tiles.at(tile.asString()));
+                blockTiles.push_back(tiles.at(tile.asString()));
             }
         }
         std::vector<int> heights {};
         for (auto height : cur["heights"]) {
             heights.push_back(height.asInt());
         }
-        blocks.insert({key, Block (blockTiles, blockTiles3d, heights)});
+        blocks.insert({key, Block (blockTiles, heights)});
     }
 
     // Load textures
@@ -64,16 +60,20 @@ LayoutLoader::LayoutLoader() {
 
     for (auto key : zonesData.getMemberNames()) {
         auto cur = zonesData[key];
-        std::vector<Block> zoneBlocks {};
-        for (auto block : cur["blocks"]) {
-            zoneBlocks.push_back(blocks.at(block.asString()));
+        std::vector<Block> layer0Blocks {};
+        for (auto block : cur["layer0"]) {
+            layer0Blocks.push_back(blocks.at(block.asString()));
         }
-        Zone z(zoneBlocks, outdoorTexture, trainer, false);
-        Zone z3d(zoneBlocks, outdoorTexture, trainer, true);
-        z.load();
-        z3d.load();
-        zones.insert({key, z});
-        zones3d.insert({key, z3d});
+        std::vector<Block> layer1Blocks {};
+        for (auto block : cur["layer1"]) {
+            layer1Blocks.push_back(blocks.at(block.asString()));
+        }
+        Zone z1(layer0Blocks, outdoorTexture, trainer);
+        z1.load();
+        Zone z2(layer1Blocks, outdoorTexture, trainer);
+        z2.load();
+        zonesLayer0.insert({key, z1});
+        zonesLayer1.insert({key, z2});
     }
 }
 
@@ -82,5 +82,5 @@ LayoutLoader::~LayoutLoader() {
 }
 
 std::pair<Zone, Zone> LayoutLoader::getZone(std::string zoneName) {
-    return std::make_pair(zones.at(zoneName), zones3d.at(zoneName));
+    return std::make_pair(zonesLayer0.at(zoneName), zonesLayer1.at(zoneName));
 }
