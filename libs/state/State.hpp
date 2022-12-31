@@ -8,7 +8,7 @@
 namespace DGMon {
     struct State {
         std::string id;
-        std::unordered_map<StateTransition, State> transitions;
+        StateType type;
     };
 }
 

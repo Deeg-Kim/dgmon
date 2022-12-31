@@ -5,6 +5,10 @@
 #include <string>
 
 namespace DGMon {
+    enum class StateType {
+        LAYOUT
+    };
+
     enum class StateTransitionType {
         CONNECT, WARP
     };
@@ -12,6 +16,7 @@ namespace DGMon {
     struct StateTransition {
         StateTransitionType type;
         std::string attribute;
+        StateType destinationType;
 
         bool operator==(const StateTransition& other) const 
         {

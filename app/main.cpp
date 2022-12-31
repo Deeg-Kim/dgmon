@@ -1,6 +1,7 @@
 #include "SFML/Graphics/Drawable.hpp"
 #include "SFML/Window/Keyboard.hpp"
 #include "game/Game.hpp"
+#include "state/StateManager.hpp"
 #include "util/Util.hpp"
 #include "data/LayoutLoader.hpp"
 #include <iostream>
@@ -10,14 +11,13 @@ using namespace std;
 using namespace DGMon;
 
 int main() {
-    auto window = sf::RenderWindow{ { 600u,  450u }, "DG Mon"};
+    auto window = sf::RenderWindow{ { 800u,  600u }, "DG Mon"};
     window.setFramerateLimit(24);
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
 
-    LayoutLoader layoutLoader;
 
-    auto layout = layoutLoader.getLayout("pallet_town");
+    StateManager stateManager(&window, "pallet_town");
 
     // Flags for key pressed
     bool moving = false;
@@ -69,11 +69,11 @@ int main() {
         }
 
         if (moving) {
-            layout->handleWASDMovement(dir);
+            stateManager.handleWASDMovement(dir);
         }
 
         window.clear();
-        layout->draw(&window);
+        stateManager.render();
         window.display();
     }
 

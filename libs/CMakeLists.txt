@@ -20,6 +20,9 @@ add_library(
 
     "${CMAKE_CURRENT_SOURCE_DIR}/data/LayoutLoader.hpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/data/LayoutLoader.cpp"
+
+    "${CMAKE_CURRENT_SOURCE_DIR}/state/StateManager.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/state/StateManager.cpp"
     
 )
 target_link_libraries(DGMonLibrary PRIVATE jsoncpp_lib sfml-graphics)

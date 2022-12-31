@@ -1,4 +1,5 @@
 #include "ZoneLayer.hpp"
+#include "util/Const.hpp"
 
 using namespace DGMon;
 
@@ -52,9 +53,9 @@ int ZoneLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Directio
     auto dirEnum = dir.getAsEnum();
 
     if ((dirEnum == DirectionType::UP && edge.first.y <= 0) || 
-        (dirEnum == DirectionType::DOWN && edge.first.y >= 960) ||
+        (dirEnum == DirectionType::DOWN && edge.first.y >= heightBlocks * BLOCK_SIZE) ||
         (dirEnum == DirectionType::LEFT && edge.first.x <= 0) ||
-        (dirEnum == DirectionType::RIGHT && edge.first.x >= 1280)) {
+        (dirEnum == DirectionType::RIGHT && edge.first.x >= widthBlocks * BLOCK_SIZE)) {
         return INFINITE_HEIGHT;
     }
 

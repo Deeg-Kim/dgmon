@@ -3,10 +3,12 @@
 #include "state/StateTransition.hpp"
 #include "util/Direction.hpp"
 #include <memory>
+#include <stdexcept>
 
 using namespace DGMon;
 
-LayoutLoader::LayoutLoader() {
+LayoutLoader::LayoutLoader() 
+{
     const std::shared_ptr<Tile> TILE_NONE_PTR = std::make_shared<Tile>(OUTSIDE, 0, 0, sf::Color(0, 0, 0, 0));
     std::unordered_map<std::string, std::shared_ptr<Tile>> tiles;
     Json::Reader reader;
@@ -16,8 +18,16 @@ LayoutLoader::LayoutLoader() {
     Json::Value tileData;
     reader.parse(outsideFile, tileData);
 
+    std::vector<std::string> expectedTileAttributes = {"texX", "texY"};
     for (auto key : tileData.getMemberNames()) {
         auto cur = tileData[key];
+
+        for (auto attr : expectedTileAttributes) {
+            if (!cur.isMember(attr)) {
+                throw std::invalid_argument("Missing tile argument for " + key + ": " + attr);
+            }
+        }
+
         auto t = std::make_shared<Tile>(OUTSIDE, cur["texX"].asInt(), cur["texY"].asInt(), sf::Color::White);
         tiles.insert({key, t});
     }
@@ -28,8 +38,16 @@ LayoutLoader::LayoutLoader() {
     Json::Value blockData;
     reader.parse(blocksFile, blockData);
     
+    std::vector<std::string> expectedBlockAttributes = {"name", "tiles", "heights"};
     for (auto key : blockData.getMemberNames()) {
         auto cur = blockData[key];
+
+        for (auto attr : expectedBlockAttributes) {
+            if (!cur.isMember(attr)) {
+                throw std::invalid_argument("Missing block argument for " + key + ": " + attr);
+            }
+        }
+
         std::vector<std::shared_ptr<Tile>> blockTiles;
         for (auto tile : cur["tiles"]) {
             if (tile.asString() == "") {
@@ -38,10 +56,20 @@ LayoutLoader::LayoutLoader() {
                 blockTiles.push_back(tiles.at(tile.asString()));
             }
         }
+
+        if (blockTiles.size() != 4) {
+            throw std::invalid_argument("Block " + key + " does not have exactly 4 tiles.");
+        }
+
         std::vector<int> heights {};
         for (auto height : cur["heights"]) {
             heights.push_back(height.asInt());
         }
+
+        if (heights.size() != 4) {
+            throw std::invalid_argument("Block " + key + " does not have exactly 4 heights.");
+        }
+
         auto name = cur["name"].asString();
         blocks[key] = std::move(std::make_shared<Block>(name, blockTiles, heights));
     }
@@ -56,15 +84,23 @@ LayoutLoader::LayoutLoader() {
     Json::Value layoutsData;
     reader.parse(layoutsFile, layoutsData);
 
+    std::vector<std::string> expectedLayoutAttributes = {"textures", "width", "height", "connections", "layers"};
     for (auto key : layoutsData.getMemberNames()) {
         auto cur = layoutsData[key];
         
+        for (auto attr : expectedLayoutAttributes) {
+            if (!cur.isMember(attr)) {
+                throw std::invalid_argument("Missing layout argument for " + key + ": " + attr);
+            }
+        }
+
         int widthBlocks = cur["width"].asInt();
         int heightBlocks = cur["height"].asInt();
 
         std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers {};
         std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers {};
 
+        // TODO: add more sanity checks on layouts
         for (auto layer : cur["layers"]) {
             std::vector<std::shared_ptr<Block>> layerBlocks;
 
@@ -98,9 +134,9 @@ LayoutLoader::LayoutLoader() {
 
             StateTransition transition;
             transition.type = StateTransitionType::CONNECT;
-            transition.attribute = cur["target"].asString();
+            transition.attribute = connection["target"].asString();
 
-            connections.push_back(std::make_shared<Connection>(transition, cur["x"].asInt(), cur["y"].asInt(), dir));
+            connections.push_back(std::make_shared<Connection>(transition, connection["x"].asInt(), connection["y"].asInt(), dir));
         }
 
         std::shared_ptr<Layout> layout = std::make_shared<Layout>(key, widthBlocks, heightBlocks, backgroundLayers, foregroundLayers, connections);

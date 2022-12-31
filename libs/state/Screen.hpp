@@ -1,6 +1,7 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
+#include "SFML/Graphics/RenderWindow.hpp"
 #include "state/State.hpp"
 #include "state/StateTransition.hpp"
 #include "util/Util.hpp"
@@ -14,9 +15,10 @@ namespace DGMon {
             {
                 return std::nullopt;
             }
+            virtual void draw(sf::RenderWindow* window) {}
             virtual State getState()
             {
-                return {"", std::unordered_map<StateTransition, State> ()};
+                return {""};
             }
             
     };

@@ -1,11 +1,14 @@
 #include "Layout.hpp"
 #include "SFML/System/Vector2.hpp"
 #include "game/Connection.hpp"
+#include "state/State.hpp"
 #include "state/StateTransition.hpp"
 #include "util/Const.hpp"
 #include "util/Direction.hpp"
+#include <iostream>
 #include <memory>
 #include <optional>
+#include <stdexcept>
 #include <utility>
 
 using namespace DGMon;
@@ -21,10 +24,12 @@ Layout::Layout(
 :id(id)
 ,widthBlocks(widthBlocks)
 ,heightBlocks(heightBlocks)
-,view(sf::Vector2f(640.f, 480.f), sf::Vector2f(800.f, 600.f))
+,view(
+    sf::Vector2f(static_cast<double>(widthBlocks) * BLOCK_SIZE / 2, static_cast<double>(heightBlocks) * BLOCK_SIZE / 2), sf::Vector2f(800.f, 600.f)
+    )
 ,backgroundLayers(backgroundLayers)
 ,foregroundLayers(foregroundLayers)
-,trainer(std::make_shared<Trainer>(1280 / 2, 960 / 2))
+,trainer(std::make_shared<Trainer>(static_cast<double>(widthBlocks) * BLOCK_SIZE / 2, static_cast<double>(heightBlocks) * BLOCK_SIZE / 2))
 {
     trainer->load();
     for (auto layer : backgroundLayers) {
@@ -38,6 +43,10 @@ Layout::Layout(
     for (auto type : ALL_DIRECTION_TYPES) {
         connectionsByDirection.insert({type, std::vector<std::shared_ptr<Connection>> {}});
     }
+
+
+    state.id = id;
+    state.type = StateType::LAYOUT;
 
     for (auto c : connections) {
         connectionsByDirection.at(c->direction.getAsEnum()).push_back(c);
@@ -71,7 +80,6 @@ std::optional<StateTransition> Layout::handleWASDMovement(Direction dir)
     int collisionHeight = 0;
 
     auto edge = getTrainerEdge(dir);
-
     // check collisions
     for (auto layer : backgroundLayers) {
         collisionHeight = std::max(collisionHeight, layer->getMaxHeight(edge, dir));
@@ -91,9 +99,9 @@ std::optional<StateTransition> Layout::handleWASDMovement(Direction dir)
 
             for (auto c : connectionsByDirection.at(DirectionType::UP)) {
                 auto cEdge = c->edge;
-                if (trainer->getPosition().y <= cEdge.first.y && 
-                    trainer->getPosition().x >= cEdge.first.x &&
-                    trainer->getPosition().x <= cEdge.second.x) {
+                if (edge.first.y <= cEdge.first.y && 
+                    edge.first.x >= cEdge.first.x &&
+                    edge.second.x <= cEdge.second.x) {
                     transition = c->transition;
                 }
             }

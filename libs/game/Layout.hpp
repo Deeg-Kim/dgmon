@@ -25,7 +25,7 @@ namespace DGMon {
                 std::vector<std::shared_ptr<Connection>> connections
             );
             ~Layout();
-            void draw(sf::RenderWindow* window);
+            void draw(sf::RenderWindow* window) override;
             std::optional<StateTransition> handleWASDMovement(Direction dir) override;
             State getState() override;
         private:

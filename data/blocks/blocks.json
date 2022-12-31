@@ -58,7 +58,8 @@
     },
     "GP1WT2": {
         "name": "Grass Path 1 width top (bottom oriented)",
-        "tiles": ["GRASS_4", "GRASS_3", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM"]
+        "tiles": ["GRASS_4", "GRASS_3", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM"],
+        "heights": [0, 0, 0, 0]
     },
     "GP1WM3": {
         "name": "Grass Path 1 width middle (left oriented)",
