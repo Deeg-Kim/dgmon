@@ -10,15 +10,15 @@ namespace DGMon {
         public:
             Trainer(int x, int y);
             ~Trainer();
-            void refresh();
-            void move(Direction direction);
-            int getHeight();
-            std::pair<sf::Vector2i, sf::Vector2i> getBoundary();
+            void load();
+            void move(Direction direction) override;
+            int getHeight() override;
+            std::pair<sf::Vector2i, sf::Vector2i> getBoundary() override;
+            float spriteSpeed;
         private:
-            void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+            void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
             sf::VertexArray vertices;
             sf::Texture texture;
-            float spriteSpeed;
             int height;
             int positionX;
             int positionY;

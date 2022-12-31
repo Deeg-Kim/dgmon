@@ -1,26 +1,44 @@
 #ifndef LAYOUT_H
 #define LAYOUT_H
 
+#include <unordered_map>
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
 #include <util/Util.hpp>
 #include "Trainer.hpp"
-#include "Zone.hpp"
+#include "ZoneLayer.hpp"
+#include "Connection.hpp"
+#include "state/Screen.hpp"
+#include "state/State.hpp"
+#include "util/Direction.hpp"
 
 namespace DGMon {
-    class Layout {
+    class Layout : public Screen {
         public:
-            Layout(std::shared_ptr<Zone> layer0, std::shared_ptr<Zone> layer1, std::shared_ptr<Zone> layer2);
+            Layout(
+                std::string id,
+                int widthBlocks,
+                int heightBlocks,
+                std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers, 
+                std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers,
+                std::vector<std::shared_ptr<Connection>> connections
+            );
             ~Layout();
             void draw(sf::RenderWindow* window);
-            void movePrimaryPlayer(Direction dir);
+            std::optional<StateTransition> handleWASDMovement(Direction dir) override;
+            State getState() override;
         private:
-            std::shared_ptr<Zone> layer0;
-            std::shared_ptr<Zone> layer1;
-            std::shared_ptr<Zone> layer2;
+            std::string id;
+            int widthBlocks;
+            int heightBlocks;
+            sf::View view;
+            std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers;
+            std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers;
+            std::unordered_map<DirectionType, std::vector<std::shared_ptr<Connection>>> connectionsByDirection;
             std::shared_ptr<Trainer> trainer;
             std::pair<sf::Vector2i, sf::Vector2i> getTrainerEdge(Direction dir);
+            State state;
     };
 };
 

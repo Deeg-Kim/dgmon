@@ -1,4 +1,5 @@
 #include "SFML/Graphics/Drawable.hpp"
+#include "SFML/Window/Keyboard.hpp"
 #include "game/Game.hpp"
 #include "util/Util.hpp"
 #include "data/LayoutLoader.hpp"
@@ -9,7 +10,7 @@ using namespace std;
 using namespace DGMon;
 
 int main() {
-    auto window = sf::RenderWindow{ { 1280u, 704u }, "DG Mon"};
+    auto window = sf::RenderWindow{ { 600u,  450u }, "DG Mon"};
     window.setFramerateLimit(24);
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
@@ -30,8 +31,7 @@ int main() {
             {
                 window.close();
             }
-
-            // If a key is pressed
+            
             if (event.type == sf::Event::KeyPressed)
             {
                 switch (event.key.code)
@@ -69,7 +69,7 @@ int main() {
         }
 
         if (moving) {
-            layout->movePrimaryPlayer(dir);
+            layout->handleWASDMovement(dir);
         }
 
         window.clear();

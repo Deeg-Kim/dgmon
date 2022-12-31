@@ -1,5 +1,7 @@
 #include "LayoutLoader.hpp"
-#include "game/Tile.hpp"
+#include "game/ZoneLayer.hpp"
+#include "state/StateTransition.hpp"
+#include "util/Direction.hpp"
 #include <memory>
 
 using namespace DGMon;
@@ -50,28 +52,58 @@ LayoutLoader::LayoutLoader() {
         std::cerr << "Failed to load outside texture\n";
     }
 
-    std::ifstream zonesFile("data/zones/zones.json");
-    Json::Value zonesData;
-    reader.parse(zonesFile, zonesData);
+    std::ifstream layoutsFile("data/layouts/layouts.json");
+    Json::Value layoutsData;
+    reader.parse(layoutsFile, layoutsData);
 
-    for (auto key : zonesData.getMemberNames()) {
-        auto cur = zonesData[key];
-        std::vector<std::shared_ptr<Block>> layer0Blocks;
-        for (auto block : cur["layer0"]) {
-            layer0Blocks.push_back(blocks.at(block.asString()));
+    for (auto key : layoutsData.getMemberNames()) {
+        auto cur = layoutsData[key];
+        
+        int widthBlocks = cur["width"].asInt();
+        int heightBlocks = cur["height"].asInt();
+
+        std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers {};
+        std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers {};
+
+        for (auto layer : cur["layers"]) {
+            std::vector<std::shared_ptr<Block>> layerBlocks;
+
+            for (auto block : layer["blocks"]) {
+                layerBlocks.push_back(blocks.at(block.asString()));
+            }
+
+            auto zoneLayer = std::make_shared<ZoneLayer>(widthBlocks, heightBlocks, layerBlocks, outdoorTexture);
+
+            if (layer["type"].asString() == "background") {
+                backgroundLayers.push_back(zoneLayer);
+            } else if (layer["type"].asString() == "foreground") {
+                foregroundLayers.push_back(zoneLayer);
+            }
         }
-        std::vector<std::shared_ptr<Block>> layer1Blocks;
-        for (auto block : cur["layer1"]) {
-            layer1Blocks.push_back(blocks.at(block.asString()));
+
+        std::vector<std::shared_ptr<Connection>> connections;
+        for (auto connection : cur["connections"]) {
+            Direction dir = NONE_DIRECTION;
+            std::string dirName = connection["direction"].asString();
+
+            if (dirName == "UP") {
+                dir = UP_DIRECTION;
+            } else if (dirName == "DOWN") {
+                dir = DOWN_DIRECTION;
+            } else if (dirName == "LEFT") {
+                dir = LEFT_DIRECTION;
+            } else if (dirName == "RIGHT") {
+                dir = RIGHT_DIRECTION;
+            }
+
+            StateTransition transition;
+            transition.type = StateTransitionType::CONNECT;
+            transition.attribute = cur["target"].asString();
+
+            connections.push_back(std::make_shared<Connection>(transition, cur["x"].asInt(), cur["y"].asInt(), dir));
         }
-        std::vector<std::shared_ptr<Block>> layer2Blocks;
-        for (auto block : cur["layer2"]) {
-            layer2Blocks.push_back(blocks.at(block.asString()));
-        }
-        auto z0 = std::shared_ptr<Zone>(new Zone(layer0Blocks, outdoorTexture));
-        auto z1 = std::shared_ptr<Zone>(new Zone(layer1Blocks, outdoorTexture));
-        auto z2 = std::shared_ptr<Zone>(new Zone(layer2Blocks, outdoorTexture));
-        std::shared_ptr<Layout> layout = std::make_shared<Layout>(z0, z1, z2);
+
+        std::shared_ptr<Layout> layout = std::make_shared<Layout>(key, widthBlocks, heightBlocks, backgroundLayers, foregroundLayers, connections);
         layouts.insert({key, layout});
     }
 }

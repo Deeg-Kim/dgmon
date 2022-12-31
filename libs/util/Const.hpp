@@ -13,8 +13,7 @@ namespace DGMon {
     const int CHARACTER_HITBOX_SIZE_X_OFFSET = 18;
     const int CHARACTER_HITBOX_SIZE_Y_OFFSET = 24;
 
-    const int WIDTH_BLOCKS = 40;
-    const int HEIGHT_BLOCKS = 22;
+    const int CONNECTION_TOLERANCE = 10;
 
     const int INFINITE_HEIGHT = 999;
 

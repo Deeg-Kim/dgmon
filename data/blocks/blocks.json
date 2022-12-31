@@ -16,39 +16,44 @@
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
         "heights": [0, 0, 0, 0]
     },
-    "GP2TL1": {
-        "name": "Grass Path 2 width top left",
+    "GP3TL1": {
+        "name": "Grass Path 3 width top left",
         "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_3W_TM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
         "heights": [0, 0, 0, 0]
     },
-    "GP2TM1": {
-        "name": "Grass Path 2 width top middle",
+    "GP3TM1": {
+        "name": "Grass Path 3 width top middle",
         "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_3W_TM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
         "heights": [0, 0, 0, 0]
     },
-    "GP2TR1": {
-        "name": "Grass Path 2 width top right",
+    "GP3TR1": {
+        "name": "Grass Path 3 width top right",
         "tiles": ["GRASS_PATH_3W_TM", "GRASS_PATH_2W_TR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
         "heights": [0, 0, 0, 0]
     },
-    "GP2LM1": {
-        "name": "Grass Path 2 width left middle",
+    "GP3LM1": {
+        "name": "Grass Path 3 width left middle",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM"],
         "heights": [0, 0, 0, 0]
     },
-    "GP2RM1": {
-        "name": "Grass Path 2 width right middle",
+    "GP3RM1": {
+        "name": "Grass Path 3 width right middle",
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_MR"],
         "heights": [0, 0, 0, 0]
     },
     "GP2BL1": {
-        "name": "Grass Path 2 width bottom left",
+        "name": "Grass Path 3 width bottom left",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_BL", "GRASS_PATH_3W_BM"],
         "heights": [0, 0, 0, 0]
     },
     "GP2BM1": {
-        "name": "Grass Path 2 width bottom middle",
+        "name": "Grass Path 3 width bottom middle",
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_BM", "GRASS_PATH_3W_BM"],
+        "heights": [0, 0, 0, 0]
+    },
+    "GP2TM1": {
+        "name": "Grass Path 2 width top middle",
+        "tiles": ["GRASS_PATH_2W_TL", "GRASS_PATH_2W_TR", "GRASS_PATH_2W_ML", "GRASS_PATH_2W_MR"],
         "heights": [0, 0, 0, 0]
     },
     "GP1WT2": {
@@ -62,17 +67,17 @@
     },
     
     "GPJBR2": {
-        "name": "Grass path joint bottom right (1 -> 2 CW)",
+        "name": "Grass path joint bottom right (1 -> 3 CW)",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MM", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_1"],
         "heights": [0, 0, 0, 0]
     },
     "GPJTR1": {
-        "name": "Grass path joint top right (2 -> 1 CW)",
+        "name": "Grass path joint top right (3 -> 1 CW)",
         "tiles": ["GRASS_PATH_2W_ML", "GRASS_PATH_3W_MR", "GRASS_PATH_2W_ML", "GRASS_PATH_JOINT_3"],
         "heights": [0, 0, 0, 0]
     },
     "GPJTR2": {
-        "name": "Grass path joint top right (1 -> 2 CW)",
+        "name": "Grass path joint top right (1 -> 3 CW)",
         "tiles": ["GRASS_PATH_3W_MM", "GRASS_PATH_3W_MR", "GRASS_PATH_3W_MM", "GRASS_PATH_JOINT_3"],
         "heights": [0, 0, 0, 0]
     },
@@ -80,6 +85,22 @@
         "name": "Grass path joint top left (0.5 -> 1 CW)",
         "tiles": ["GRASS_3", "GRASS_PATH_3W_ML", "GRASS_PATH_3W_TM", "GRASS_PATH_JOINT_4"],
         "heights": [0, 0, 0, 0]
+    },
+    "GPJLR5": {
+        "name": "Grass path joint top to left/right (2 -> 3 CW)",
+        "tiles": ["GRASS_PATH_JOINT_10", "GRASS_PATH_JOINT_9", "GRASS_PATH_3W_MM", "GRASS_PATH_3W_MM"],
+        "heights": [0, 0, 0, 0]
+    },
+
+    "DTREE1": {
+        "name": "Default tree 1",
+        "tiles": ["TREE_DEFAULT_8", "TREE_DEFAULT_9", "TREE_DEFAULT_14", "TREE_DEFAULT_15"],
+        "heights": [2, 2, 2, 2]
+    },
+    "DTREE2": {
+        "name": "Default tree 2",
+        "tiles": ["TREE_DEFAULT_8", "TREE_DEFAULT_9", "TREE_DEFAULT_1", "TREE_DEFAULT_2"],
+        "heights": [2, 2, 2, 2]
     },
 
     "HBRED1": {

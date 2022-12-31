@@ -1,30 +1,31 @@
-#include "Zone.hpp"
-#include "util/Const.hpp"
+#include "ZoneLayer.hpp"
 
 using namespace DGMon;
 
-Zone::Zone(std::vector<std::shared_ptr<Block>> blocks, sf::Texture texture)
-:blocks(blocks)
+ZoneLayer::ZoneLayer(int widthBlocks, int heightBlocks, std::vector<std::shared_ptr<Block>> blocks, sf::Texture texture)
+:widthBlocks(widthBlocks)
+,heightBlocks(heightBlocks)
+,blocks(blocks)
 ,vertices(sf::VertexArray ())
 ,texture(texture)
 {
 }
 
-Zone::~Zone() 
+ZoneLayer::~ZoneLayer() 
 {
     std::vector<std::shared_ptr<Block>>().swap(blocks);
     sf::Texture().swap(texture);
 }
 
-void Zone::load() 
+void ZoneLayer::load() 
 {
     vertices.setPrimitiveType(sf::Quads);
     // 4 quds per tile, 4 tiles per block
-    vertices.resize(WIDTH_BLOCKS * HEIGHT_BLOCKS * 4 * 4);
+    vertices.resize(widthBlocks * heightBlocks * 4 * 4);
 
-    for (int i = 0; i < WIDTH_BLOCKS; i++) {
-        for (int j = 0; j < HEIGHT_BLOCKS; j++) {
-            auto block = blocks.at(i + j * WIDTH_BLOCKS);
+    for (int i = 0; i < widthBlocks; i++) {
+        for (int j = 0; j < heightBlocks; j++) {
+            auto block = blocks.at(i + j * widthBlocks);
             for (auto v : block->getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
                 vertices.append(v);
             }
@@ -47,13 +48,13 @@ int getTileIdx(int x, int y) {
     }
 }
 
-int Zone::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir) {
+int ZoneLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir) {
     auto dirEnum = dir.getAsEnum();
 
-    if ((dirEnum == UP && edge.first.y <= 0) || 
-        (dirEnum == DOWN && edge.first.y >= 704) ||
-        (dirEnum == LEFT && edge.first.x <= 0) ||
-        (dirEnum == RIGHT && edge.first.x >= 1280)) {
+    if ((dirEnum == DirectionType::UP && edge.first.y <= 0) || 
+        (dirEnum == DirectionType::DOWN && edge.first.y >= 960) ||
+        (dirEnum == DirectionType::LEFT && edge.first.x <= 0) ||
+        (dirEnum == DirectionType::RIGHT && edge.first.x >= 1280)) {
         return INFINITE_HEIGHT;
     }
 
@@ -68,20 +69,20 @@ int Zone::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir
         for (int i = tilesStartY; i <= tilesEndY; i++) {
             int blockX = floor(static_cast<double>(tilesStartX) / 2);
             int blockY = floor(static_cast<double>(i) / 2);
-            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY)->heights.at(getTileIdx(tilesStartX, i)));
+            max = std::max(max, blocks.at(blockX + widthBlocks * blockY)->heights.at(getTileIdx(tilesStartX, i)));
         }
     } else if (tilesStartY == tilesEndY) {
         for (int i = tilesStartX; i <= tilesEndX; i++) {
             int blockX = floor(static_cast<double>(i) / 2);
             int blockY = floor(static_cast<double>(tilesStartY) / 2);
-            max = std::max(max, blocks.at(blockX + WIDTH_BLOCKS * blockY)->heights.at(getTileIdx(i, tilesStartY)));
+            max = std::max(max, blocks.at(blockX + widthBlocks * blockY)->heights.at(getTileIdx(i, tilesStartY)));
         }
     }
 
     return max;
 }
 
-void Zone::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void ZoneLayer::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
     states.texture = &texture;

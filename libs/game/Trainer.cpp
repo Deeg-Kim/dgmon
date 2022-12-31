@@ -27,7 +27,7 @@ Trainer::~Trainer()
 {
 }
 
-void Trainer::refresh() 
+void Trainer::load() 
 {
     sf::Vertex* vert = &vertices[0];
 
@@ -49,21 +49,21 @@ void Trainer::move(Direction direction)
     tileState = (tileState + 1) % 4;
     auto dirEnum = direction.getAsEnum();
     switch (dirEnum) {
-        case UP: 
+        case DirectionType::UP: 
             tileRow = 3;
             break;
-        case DOWN: case NONE:
+        case DirectionType::DOWN: case DirectionType::NONE:
             tileRow = 0;
             break;
-        case LEFT:
+        case DirectionType::LEFT:
             tileRow = 1;
             break;
-        case RIGHT:
+        case DirectionType::RIGHT:
             tileRow = 2;
             break;
     }
 
-    refresh();
+    load();
 }
 
 int Trainer::getHeight() 

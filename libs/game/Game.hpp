@@ -3,7 +3,8 @@
 
 #include "Tile.hpp"
 #include "Block.hpp"
-#include "Zone.hpp"
+#include "Connection.hpp"
+#include "ZoneLayer.hpp"
 #include "Trainer.hpp"
 #include "Layout.hpp"
 
