@@ -67,13 +67,13 @@ int ZoneLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Directio
     int max = 0;
 
     if (tilesStartX == tilesEndX) {
-        for (int i = tilesStartY; i <= tilesEndY; i++) {
+        for (int i = tilesStartY; i < tilesEndY; i++) {
             int blockX = floor(static_cast<double>(tilesStartX) / 2);
             int blockY = floor(static_cast<double>(i) / 2);
             max = std::max(max, blocks.at(blockX + widthBlocks * blockY)->heights.at(getTileIdx(tilesStartX, i)));
         }
     } else if (tilesStartY == tilesEndY) {
-        for (int i = tilesStartX; i <= tilesEndX; i++) {
+        for (int i = tilesStartX; i < tilesEndX; i++) {
             int blockX = floor(static_cast<double>(i) / 2);
             int blockY = floor(static_cast<double>(tilesStartY) / 2);
             max = std::max(max, blocks.at(blockX + widthBlocks * blockY)->heights.at(getTileIdx(i, tilesStartY)));

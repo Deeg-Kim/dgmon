@@ -3,6 +3,12 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON CACHE INTERNAL "")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+
+set(CXX_FLAGS "-Wall")
+set(CMAKE_CXX_FLAGS, "${CXX_FLAGS}")
+
+set(CMAKE_BUILD_TYPE Debug)
+
 project(DGMonProject)
 
 include_directories("/usr/local/include/freetype2")

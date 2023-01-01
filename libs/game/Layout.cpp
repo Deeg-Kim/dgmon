@@ -50,7 +50,10 @@ Layout::Layout(
 
     for (auto c : connections) {
         connectionsByDirection.at(c->direction.getAsEnum()).push_back(c);
+        connectionsByName.insert({c->transition.toAttribute, c});
     }
+
+    std::cout << connectionsByName.size() << std::endl;
 }
 
 Layout::~Layout()
@@ -72,6 +75,32 @@ void Layout::draw(sf::RenderWindow* window) {
     window->draw(*trainer);
     for (auto layer : foregroundLayers) {
         window->draw(*layer);
+    }
+}
+
+void Layout::handlePreviousTransition(StateTransition transition) {
+    // came from another layout
+    if (transition.type == StateTransitionType::CONNECT) {
+        // TODO: do check here if there isn't a return connection
+        auto c = connectionsByName.at(transition.fromAttribute);
+
+        int x, y;
+
+        if (c->direction.getAsEnum() == DirectionType::UP) {
+            x = c->x * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+            y = TILE_MAP_TILE_SIZE;
+        } else if (c->direction.getAsEnum() == DirectionType::DOWN) {
+            x = c->x * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+            y = (heightBlocks - 1) * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+        } else if (c->direction.getAsEnum() == DirectionType::LEFT) {
+            x = TILE_MAP_TILE_SIZE;
+            y = c->y * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+        } else if (c->direction.getAsEnum() == DirectionType::RIGHT) {
+            x = (widthBlocks - 1) * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+            y = c->y * BLOCK_SIZE + TILE_MAP_TILE_SIZE;
+        }
+        trainer->setLocation(x, y);
+        view.setCenter(sf::Vector2f (x, y));
     }
 }
 
@@ -107,10 +136,37 @@ std::optional<StateTransition> Layout::handleWASDMovement(Direction dir)
             }
         } else if (dirEnum == DirectionType::DOWN) {
             view.move(0, trainer->spriteSpeed);
+
+            for (auto c : connectionsByDirection.at(DirectionType::DOWN)) {
+                auto cEdge = c->edge;
+                if (edge.first.y >= cEdge.first.y && 
+                    edge.first.x >= cEdge.first.x &&
+                    edge.second.x <= cEdge.second.x) {
+                    transition = c->transition;
+                }
+            }
         } else if (dirEnum == DirectionType::LEFT) {
             view.move(-trainer->spriteSpeed, 0);
+
+            for (auto c : connectionsByDirection.at(DirectionType::LEFT)) {
+                auto cEdge = c->edge;
+                if (edge.first.x <= cEdge.first.x && 
+                    edge.first.y >= cEdge.first.y &&
+                    edge.second.y <= cEdge.second.y) {
+                    transition = c->transition;
+                }
+            }
         } else if (dirEnum == DirectionType::RIGHT) {
             view.move(trainer->spriteSpeed, 0);
+
+            for (auto c : connectionsByDirection.at(DirectionType::RIGHT)) {
+                auto cEdge = c->edge;
+                if (edge.first.x >= cEdge.first.x && 
+                    edge.first.y >= cEdge.first.y &&
+                    edge.second.y <= cEdge.second.y) {
+                    transition = c->transition;
+                }
+            }
         }
     }
 

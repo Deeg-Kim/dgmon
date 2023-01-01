@@ -19,10 +19,11 @@ void StateManager::handleWASDMovement(Direction dir) {
     auto transition = screen->handleWASDMovement(dir);
 
     if (transition.has_value()) {
-        // if (transition->type == StateTransitionType::CONNECT) {
-        //     if (transition->destinationType == StateType::LAYOUT) {
-                screen = layoutLoader->getLayout(transition->attribute);
-        //     }
-        // }
+        if (transition->type == StateTransitionType::CONNECT) {
+            if (transition->destinationType == StateType::LAYOUT) {
+                screen = layoutLoader->getLayout(transition->toAttribute);
+                screen->handlePreviousTransition(transition.value());
+            }
+        }
     }
 }

@@ -156,6 +156,14 @@
         "texX": 3,
         "texY": 52
     },
+    "TREE_DEFAULT_5": {
+        "texX": 4,
+        "texY": 52
+    },
+    "TREE_DEFAULT_6": {
+        "texX": 5,
+        "texY": 52
+    },
 
     "TREE_DEFAULT_8": {
         "texX": 0,
@@ -184,6 +192,11 @@
     "MAILBOX_2": {
         "texX": 2,
         "texY": 121
+    },
+
+    "WHITE_FENCE_LR_2": {
+        "texX": 1,
+        "texY": 162
     },
 
     "HOUSE_BIG_ROOF_RED_1": {

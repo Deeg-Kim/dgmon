@@ -134,7 +134,9 @@ LayoutLoader::LayoutLoader()
 
             StateTransition transition;
             transition.type = StateTransitionType::CONNECT;
-            transition.attribute = connection["target"].asString();
+            transition.toAttribute = connection["target"].asString();
+            transition.fromAttribute = key;
+            transition.destinationType = StateType::LAYOUT;
 
             connections.push_back(std::make_shared<Connection>(transition, connection["x"].asInt(), connection["y"].asInt(), dir));
         }

@@ -16,7 +16,6 @@ int main() {
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);
 
-
     StateManager stateManager(&window, "pallet_town");
 
     // Flags for key pressed

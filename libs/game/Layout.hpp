@@ -26,6 +26,7 @@ namespace DGMon {
             );
             ~Layout();
             void draw(sf::RenderWindow* window) override;
+            void handlePreviousTransition(StateTransition transition) override;
             std::optional<StateTransition> handleWASDMovement(Direction dir) override;
             State getState() override;
         private:
@@ -35,6 +36,7 @@ namespace DGMon {
             sf::View view;
             std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers;
             std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers;
+            std::unordered_map<std::string, std::shared_ptr<Connection>> connectionsByName;
             std::unordered_map<DirectionType, std::vector<std::shared_ptr<Connection>>> connectionsByDirection;
             std::shared_ptr<Trainer> trainer;
             std::pair<sf::Vector2i, sf::Vector2i> getTrainerEdge(Direction dir);

@@ -6,6 +6,7 @@
 namespace DGMon {
     class Movable {
         virtual void move(Direction direction) {};
+        virtual void setLocation(int x, int y) {};
     };
 };
 

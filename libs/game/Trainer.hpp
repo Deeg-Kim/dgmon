@@ -12,6 +12,7 @@ namespace DGMon {
             ~Trainer();
             void load();
             void move(Direction direction) override;
+            void setLocation(int x, int y) override;
             int getHeight() override;
             std::pair<sf::Vector2i, sf::Vector2i> getBoundary() override;
             float spriteSpeed;

@@ -7,7 +7,7 @@ using namespace DGMon;
 Trainer::Trainer(int x, int y)
 :vertices(sf::VertexArray ())
 ,texture(sf::Texture ())
-,spriteSpeed(8.f) 
+,spriteSpeed(16.f) 
 ,height(0)
 ,positionX(x)
 ,positionY(y)
@@ -64,6 +64,11 @@ void Trainer::move(Direction direction)
     }
 
     load();
+}
+
+void Trainer::setLocation(int x, int y) {
+    positionX = x;
+    positionY = y;
 }
 
 int Trainer::getHeight() 
