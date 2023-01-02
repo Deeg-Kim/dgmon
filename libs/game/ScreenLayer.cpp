@@ -1,5 +1,4 @@
 #include "ScreenLayer.hpp"
-#include "util/Const.hpp"
 
 using namespace DGMon;
 
@@ -18,7 +17,7 @@ ScreenLayer::ScreenLayer(
 
 ScreenLayer::~ScreenLayer() 
 {
-    std::vector<std::shared_ptr<Block>>().swap(blocks);
+    // std::vector<std::shared_ptr<Block>>().swap(blocks);
 }
 
 void ScreenLayer::init(int offsetX, int offsetY) 
@@ -58,17 +57,22 @@ int getTileIdx(int x, int y) {
 int ScreenLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir) {
     auto dirEnum = dir.getAsEnum();
 
-    if ((dirEnum == DirectionType::UP && edge.first.y <= 0) || 
-        (dirEnum == DirectionType::DOWN && edge.first.y >= heightBlocks * BLOCK_SIZE) ||
-        (dirEnum == DirectionType::LEFT && edge.first.x <= 0) ||
-        (dirEnum == DirectionType::RIGHT && edge.first.x >= widthBlocks * BLOCK_SIZE)) {
-        return INFINITE_HEIGHT;
-    }
+    // if ((dirEnum == DirectionType::UP && edge.first.y <= 0) || 
+    //     (dirEnum == DirectionType::DOWN && edge.first.y >= heightBlocks * BLOCK_SIZE) ||
+    //     (dirEnum == DirectionType::LEFT && edge.first.x <= 0) ||
+    //     (dirEnum == DirectionType::RIGHT && edge.first.x >= widthBlocks * BLOCK_SIZE)) {
+    //     return INFINITE_HEIGHT;
+    // }
 
     int tilesStartX = floor(static_cast<double>(edge.first.x) / TILE_MAP_TILE_SIZE);
     int tilesStartY = floor(static_cast<double>(edge.first.y) / TILE_MAP_TILE_SIZE);
     int tilesEndX = floor(static_cast<double>(edge.second.x) / TILE_MAP_TILE_SIZE);
     int tilesEndY = floor(static_cast<double>(edge.second.y) / TILE_MAP_TILE_SIZE);
+
+    tilesStartX = std::max(tilesStartX, 0);
+    tilesEndX = std::min(tilesEndX, widthBlocks * 2);
+    tilesStartY = std::max(tilesStartY, 0);
+    tilesEndY = std::min(tilesEndY, heightBlocks * 2);
 
     int max = 0;
 

@@ -9,6 +9,7 @@
 #include <memory>
 
 #include <SFML/Graphics.hpp>
+#include <algorithm>
 #include "util/Util.hpp"
 #include "Block.hpp"
 #include "Tile.hpp"

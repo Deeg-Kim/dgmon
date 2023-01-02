@@ -13,12 +13,12 @@
 
 namespace DGMon {
     struct LayoutLoad {
-        LayoutLoad(std::shared_ptr<Layout> primary, std::vector<std::shared_ptr<Layout>> adjacent)
+        LayoutLoad(std::shared_ptr<Layout> primary, std::unordered_map<std::string, std::shared_ptr<Layout>> adjacent)
         :primary(primary)
         ,adjacent(adjacent)
         {}
         std::shared_ptr<Layout> primary;
-        std::vector<std::shared_ptr<Layout>> adjacent;
+        std::unordered_map<std::string, std::shared_ptr<Layout>> adjacent;
     };
 
     class LayoutLoader {

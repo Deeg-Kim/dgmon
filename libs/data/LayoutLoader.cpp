@@ -2,6 +2,7 @@
 #include "util/Const.hpp"
 #include "util/Direction.hpp"
 #include <memory>
+#include <unordered_map>
 
 using namespace DGMon;
 
@@ -80,7 +81,7 @@ std::shared_ptr<LayoutLoad> LayoutLoader::loadLayout(std::string zoneName, int o
     auto primary = getLayout(zoneName, trainer);
     primary->init(offsetX, offsetY);
 
-    std::vector<std::shared_ptr<Layout>> adjacent {};
+    std::unordered_map<std::string, std::shared_ptr<Layout>> adjacent {};
     for (auto c : primary->connectionsByDirection) {
         auto dir = c.first;
         auto connections = c.second;
@@ -90,9 +91,11 @@ std::shared_ptr<LayoutLoad> LayoutLoader::loadLayout(std::string zoneName, int o
 
             if (dir == DirectionType::UP) {
                 layout->init(offsetX, offsetY - layout->heightBlocks * BLOCK_SIZE);
+            } else if (dir == DirectionType::DOWN) {
+                layout->init(offsetX, offsetY + layout->heightBlocks * BLOCK_SIZE);
             }
 
-            adjacent.push_back(layout);
+            adjacent.insert({layout->id, layout});
         }
     }
 
