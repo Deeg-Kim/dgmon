@@ -4,15 +4,20 @@
         "tiles": ["", "", "", ""],
         "heights": [0, 0, 0, 0]
     },
+    "111111": {
+        "name": "Grass background color",
+        "tiles": ["GRASS_COLOR", "GRASS_COLOR", "GRASS_COLOR", "GRASS_COLOR"],
+        "heights": [0, 0, 0, 0]
+    },
 
     "GRASS1": {
         "name": "Standard grass 1",
         "tiles": ["GRASS_4", "GRASS_3", "GRASS_1", "GRASS_5"],
         "heights": [0, 0, 0, 0]
     },
-    "WGRAS1": {
-        "name": "Wild grass 1",
-        "tiles": ["WILD_GRASS_1", "WILD_GRASS_1", "WILD_GRASS_1", "WILD_GRASS_1"],
+    "TGRAS1": {
+        "name": "Tall grass 1",
+        "tiles": ["TALL_GRASS_1", "TALL_GRASS_1", "TALL_GRASS_1", "TALL_GRASS_1"],
         "heights": [0, 0, 0, 0]
     },
 

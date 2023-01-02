@@ -44,7 +44,7 @@ void StateManager::handleWASDMovement(Direction dir) {
         if (transition->type == StateTransitionType::CONNECT) {
             if (transition->destinationType == StateType::LAYOUT) {
                 auto adj = screens->adjacent.at(transition->toAttribute);
-                screens = layoutLoader->loadLayout(adj->id, adj->offsetX, adj->offsetY, trainer);
+                // screens = layoutLoader->loadLayout(adj->id, adj->offsetX, adj->offsetY, trainer);
             }
         }
     }
