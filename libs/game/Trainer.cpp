@@ -1,11 +1,13 @@
 #include "Trainer.hpp"
 #include "SFML/System/Vector2.hpp"
+#include "util/Const.hpp"
 #include <utility>
 
 using namespace DGMon;
 
-Trainer::Trainer(int x, int y)
-:vertices(sf::VertexArray ())
+Trainer::Trainer(int x, int y, std::shared_ptr<sf::View> view)
+:view(view)
+,vertices(sf::VertexArray ())
 ,texture(sf::Texture ())
 ,spriteSpeed(16.f) 
 ,height(0)
@@ -40,6 +42,8 @@ void Trainer::load()
     vert[1].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, tileRow * tileSize.y);
     vert[2].texCoords = sf::Vector2f((tileState + 1) * tileSize.x, (tileRow + 1) * tileSize.y);
     vert[3].texCoords = sf::Vector2f(tileState * tileSize.x, (tileRow + 1) * tileSize.y);
+
+    view->setCenter(sf::Vector2f(positionX, positionY));
 }
 
 void Trainer::move(Direction direction) 
@@ -62,13 +66,14 @@ void Trainer::move(Direction direction)
             tileRow = 2;
             break;
     }
-
     load();
 }
 
 void Trainer::setLocation(int x, int y) {
     positionX = x;
     positionY = y;
+
+    load();
 }
 
 int Trainer::getHeight() 
@@ -76,12 +81,24 @@ int Trainer::getHeight()
     return height;
 }
 
-std::pair<sf::Vector2i, sf::Vector2i> Trainer::getBoundary() 
-{
-    return std::make_pair(
+std::pair<sf::Vector2i, sf::Vector2i> Trainer::getEdge(Direction dir) {
+    auto boundary = std::make_pair(
         sf::Vector2i (positionX - CHARACTER_HITBOX_SIZE_X_OFFSET, positionY - CHARACTER_HITBOX_SIZE_Y_OFFSET), 
         sf::Vector2i (positionX + CHARACTER_HITBOX_SIZE_X_OFFSET, positionY + CHARACTER_HITBOX_SIZE_Y_OFFSET)
     );
+
+    switch (dir.getAsEnum()) {
+        case DirectionType::UP:
+            return std::make_pair(sf::Vector2i (boundary.first.x, boundary.first.y),sf::Vector2i (boundary.second.x, boundary.first.y));
+        case DirectionType::DOWN:
+            return std::make_pair(sf::Vector2i (boundary.first.x, boundary.second.y),sf::Vector2i (boundary.second.x, boundary.second.y));
+        case DirectionType::LEFT:
+            return std::make_pair(sf::Vector2i (boundary.first.x, boundary.first.y), sf::Vector2i (boundary.first.x, boundary.second.y));
+        case DirectionType::RIGHT:
+            return std::make_pair(sf::Vector2i (boundary.second.x, boundary.first.y), sf::Vector2i (boundary.second.x, boundary.second.y));
+        default:
+            throw new std::invalid_argument("Unknown direction.");
+    }
 }
 
 void Trainer::draw(sf::RenderTarget& target, sf::RenderStates states) const 

@@ -1,9 +1,13 @@
-#include "ZoneLayer.hpp"
+#include "ScreenLayer.hpp"
 #include "util/Const.hpp"
 
 using namespace DGMon;
 
-ZoneLayer::ZoneLayer(int widthBlocks, int heightBlocks, std::vector<std::shared_ptr<Block>> blocks, sf::Texture texture)
+ScreenLayer::ScreenLayer(
+    int widthBlocks, 
+    int heightBlocks,
+    std::vector<std::shared_ptr<Block>> blocks, 
+    std::shared_ptr<sf::Texture> texture)
 :widthBlocks(widthBlocks)
 ,heightBlocks(heightBlocks)
 ,blocks(blocks)
@@ -12,14 +16,16 @@ ZoneLayer::ZoneLayer(int widthBlocks, int heightBlocks, std::vector<std::shared_
 {
 }
 
-ZoneLayer::~ZoneLayer() 
+ScreenLayer::~ScreenLayer() 
 {
     std::vector<std::shared_ptr<Block>>().swap(blocks);
-    sf::Texture().swap(texture);
 }
 
-void ZoneLayer::load() 
+void ScreenLayer::init(int offsetX, int offsetY) 
 {
+    this->offsetX = offsetX;
+    this->offsetY = offsetY;
+
     vertices.setPrimitiveType(sf::Quads);
     // 4 quds per tile, 4 tiles per block
     vertices.resize(widthBlocks * heightBlocks * 4 * 4);
@@ -27,7 +33,7 @@ void ZoneLayer::load()
     for (int i = 0; i < widthBlocks; i++) {
         for (int j = 0; j < heightBlocks; j++) {
             auto block = blocks.at(i + j * widthBlocks);
-            for (auto v : block->getVertices(i * BLOCK_SIZE, j * BLOCK_SIZE)) {
+            for (auto v : block->getVertices(i * BLOCK_SIZE + this->offsetX, j * BLOCK_SIZE + this->offsetY)) {
                 vertices.append(v);
             }
         }
@@ -49,7 +55,7 @@ int getTileIdx(int x, int y) {
     }
 }
 
-int ZoneLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir) {
+int ScreenLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir) {
     auto dirEnum = dir.getAsEnum();
 
     if ((dirEnum == DirectionType::UP && edge.first.y <= 0) || 
@@ -83,9 +89,9 @@ int ZoneLayer::getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Directio
     return max;
 }
 
-void ZoneLayer::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void ScreenLayer::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     states.transform *= getTransform();
-    states.texture = &texture;
+    states.texture = &*texture;
     target.draw(vertices, states);
 }

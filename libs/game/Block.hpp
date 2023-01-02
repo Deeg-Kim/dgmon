@@ -14,7 +14,6 @@ namespace DGMon {
             std::vector<sf::Vertex> getVertices(int initX, int initY);
             std::string name;
             std::vector<int> heights;
-        private:
             std::vector<std::shared_ptr<Tile>> tiles;
     };
 };

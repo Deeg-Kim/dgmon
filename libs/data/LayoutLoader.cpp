@@ -1,16 +1,15 @@
 #include "LayoutLoader.hpp"
-#include "game/ZoneLayer.hpp"
-#include "state/StateTransition.hpp"
+#include "util/Const.hpp"
 #include "util/Direction.hpp"
 #include <memory>
-#include <stdexcept>
 
 using namespace DGMon;
 
-LayoutLoader::LayoutLoader() 
+LayoutLoader::LayoutLoader(std::shared_ptr<sf::View> view, std::shared_ptr<TextureLoader> textureLoader)
+:view(view)
+,textureLoader(textureLoader)
 {
-    const std::shared_ptr<Tile> TILE_NONE_PTR = std::make_shared<Tile>(OUTSIDE, 0, 0, sf::Color(0, 0, 0, 0));
-    std::unordered_map<std::string, std::shared_ptr<Tile>> tiles;
+    const std::shared_ptr<Tile> TILE_NONE_PTR = std::make_shared<Tile>("tilesets/Outside", 0, 0, sf::Color(0, 0, 0, 0));
     Json::Reader reader;
 
     // TODO: Generalize to more texture sources
@@ -19,8 +18,9 @@ LayoutLoader::LayoutLoader()
     reader.parse(outsideFile, tileData);
 
     std::vector<std::string> expectedTileAttributes = {"texX", "texY"};
-    for (auto key : tileData.getMemberNames()) {
-        auto cur = tileData[key];
+    std::string textureSource = tileData["texture"].asString();
+    for (auto key : tileData["definitions"].getMemberNames()) {
+        auto cur = tileData["definitions"][key];
 
         for (auto attr : expectedTileAttributes) {
             if (!cur.isMember(attr)) {
@@ -28,11 +28,9 @@ LayoutLoader::LayoutLoader()
             }
         }
 
-        auto t = std::make_shared<Tile>(OUTSIDE, cur["texX"].asInt(), cur["texY"].asInt(), sf::Color::White);
+        auto t = std::make_shared<Tile>(textureSource, cur["texX"].asInt(), cur["texY"].asInt(), sf::Color::White);
         tiles.insert({key, t});
     }
-    
-    std::unordered_map<std::string, std::shared_ptr<Block>> blocks;
 
     std::ifstream blocksFile("data/blocks/blocks.json");
     Json::Value blockData;
@@ -73,83 +71,97 @@ LayoutLoader::LayoutLoader()
         auto name = cur["name"].asString();
         blocks[key] = std::move(std::make_shared<Block>(name, blockTiles, heights));
     }
+}
 
-    // Load textures
-    sf::Texture outdoorTexture;
-    if (!outdoorTexture.loadFromFile("assets/tilesets/outside.png")) {
-        std::cerr << "Failed to load outside texture\n";
+LayoutLoader::~LayoutLoader() {    
+}
+
+std::shared_ptr<LayoutLoad> LayoutLoader::loadLayout(std::string zoneName, int offsetX, int offsetY, std::shared_ptr<Trainer> trainer) {
+    auto primary = getLayout(zoneName, trainer);
+    primary->init(offsetX, offsetY);
+
+    std::vector<std::shared_ptr<Layout>> adjacent {};
+    for (auto c : primary->connectionsByDirection) {
+        auto dir = c.first;
+        auto connections = c.second;
+
+        for (auto connection : connections) {
+            auto layout = getLayout(connection->transition.toAttribute, trainer);
+
+            if (dir == DirectionType::UP) {
+                layout->init(offsetX, offsetY - layout->heightBlocks * BLOCK_SIZE);
+            }
+
+            adjacent.push_back(layout);
+        }
     }
 
-    std::ifstream layoutsFile("data/layouts/layouts.json");
+    return std::make_shared<LayoutLoad>(primary, adjacent);
+}
+
+std::shared_ptr<Layout> LayoutLoader::getLayout(std::string zoneName, std::shared_ptr<Trainer> trainer) {
+    std::ifstream layoutsFile("data/layouts/" + zoneName + ".json");
     Json::Value layoutsData;
+
+    Json::Reader reader;
     reader.parse(layoutsFile, layoutsData);
 
-    std::vector<std::string> expectedLayoutAttributes = {"textures", "width", "height", "connections", "layers"};
-    for (auto key : layoutsData.getMemberNames()) {
-        auto cur = layoutsData[key];
-        
-        for (auto attr : expectedLayoutAttributes) {
-            if (!cur.isMember(attr)) {
-                throw std::invalid_argument("Missing layout argument for " + key + ": " + attr);
-            }
-        }
-
-        int widthBlocks = cur["width"].asInt();
-        int heightBlocks = cur["height"].asInt();
-
-        std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers {};
-        std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers {};
-
-        // TODO: add more sanity checks on layouts
-        for (auto layer : cur["layers"]) {
-            std::vector<std::shared_ptr<Block>> layerBlocks;
-
-            for (auto block : layer["blocks"]) {
-                layerBlocks.push_back(blocks.at(block.asString()));
-            }
-
-            auto zoneLayer = std::make_shared<ZoneLayer>(widthBlocks, heightBlocks, layerBlocks, outdoorTexture);
-
-            if (layer["type"].asString() == "background") {
-                backgroundLayers.push_back(zoneLayer);
-            } else if (layer["type"].asString() == "foreground") {
-                foregroundLayers.push_back(zoneLayer);
-            }
-        }
-
-        std::vector<std::shared_ptr<Connection>> connections;
-        for (auto connection : cur["connections"]) {
-            Direction dir = NONE_DIRECTION;
-            std::string dirName = connection["direction"].asString();
-
-            if (dirName == "UP") {
-                dir = UP_DIRECTION;
-            } else if (dirName == "DOWN") {
-                dir = DOWN_DIRECTION;
-            } else if (dirName == "LEFT") {
-                dir = LEFT_DIRECTION;
-            } else if (dirName == "RIGHT") {
-                dir = RIGHT_DIRECTION;
-            }
-
-            StateTransition transition;
-            transition.type = StateTransitionType::CONNECT;
-            transition.toAttribute = connection["target"].asString();
-            transition.fromAttribute = key;
-            transition.destinationType = StateType::LAYOUT;
-
-            connections.push_back(std::make_shared<Connection>(transition, connection["x"].asInt(), connection["y"].asInt(), dir));
-        }
-
-        std::shared_ptr<Layout> layout = std::make_shared<Layout>(key, widthBlocks, heightBlocks, backgroundLayers, foregroundLayers, connections);
-        layouts.insert({key, layout});
-    }
-}
-
-LayoutLoader::~LayoutLoader() {
+    std::vector<std::string> expectedLayoutAttributes = {"width", "height", "connections", "layers"};
     
-}
+    for (auto attr : expectedLayoutAttributes) {
+        if (!layoutsData.isMember(attr)) {
+            throw std::invalid_argument("Missing layout argument for " + zoneName + ": " + attr);
+        }
+    }
 
-std::shared_ptr<Layout> LayoutLoader::getLayout(std::string zoneName) {
-    return layouts.at(zoneName);
+    int widthBlocks = layoutsData["width"].asInt();
+    int heightBlocks = layoutsData["height"].asInt();
+
+    std::vector<std::shared_ptr<ScreenLayer>> backgroundLayers {};
+    std::vector<std::shared_ptr<ScreenLayer>> foregroundLayers {};
+
+    // TODO: add more sanity checks on layouts
+    for (auto layer : layoutsData["layers"]) {
+        std::vector<std::shared_ptr<Block>> layerBlocks;
+
+        for (auto block : layer["blocks"]) {
+            layerBlocks.push_back(blocks.at(block.asString()));
+        }
+
+        auto screenLayer = std::make_shared<ScreenLayer>(widthBlocks, heightBlocks, layerBlocks, textureLoader->getTexture("tilesets/Outside"));
+
+        if (layer["type"].asString() == "background") {
+            backgroundLayers.push_back(screenLayer);
+        } else if (layer["type"].asString() == "foreground") {
+            foregroundLayers.push_back(screenLayer);
+        }
+    }
+
+    std::vector<std::shared_ptr<Connection>> connections;
+    for (auto connection : layoutsData["connections"]) {
+        Direction dir = NONE_DIRECTION;
+        std::string dirName = connection["direction"].asString();
+
+        if (dirName == "UP") {
+            dir = UP_DIRECTION;
+        } else if (dirName == "DOWN") {
+            dir = DOWN_DIRECTION;
+        } else if (dirName == "LEFT") {
+            dir = LEFT_DIRECTION;
+        } else if (dirName == "RIGHT") {
+            dir = RIGHT_DIRECTION;
+        }
+
+        StateTransition transition;
+        transition.type = StateTransitionType::CONNECT;
+        transition.toAttribute = connection["target"].asString();
+        transition.fromAttribute = zoneName;
+        transition.destinationType = StateType::LAYOUT;
+
+        connections.push_back(std::make_shared<Connection>(transition, connection["x"].asInt(), connection["y"].asInt(), dir));
+    }
+
+    std::shared_ptr<Layout> layout = std::make_shared<Layout>(zoneName, widthBlocks, heightBlocks, trainer, backgroundLayers, foregroundLayers, connections);
+
+    return layout;
 }

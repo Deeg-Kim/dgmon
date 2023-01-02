@@ -1,4 +1,5 @@
 #include "SFML/Graphics/Drawable.hpp"
+#include "SFML/Graphics/RenderTexture.hpp"
 #include "SFML/Window/Keyboard.hpp"
 #include "game/Game.hpp"
 #include "state/StateManager.hpp"
@@ -12,6 +13,7 @@ using namespace DGMon;
 
 int main() {
     auto window = sf::RenderWindow{ { 800u,  600u }, "DG Mon"};
+    sf::RenderTexture render;
     window.setFramerateLimit(24);
     window.setVerticalSyncEnabled (true);
     window.setKeyRepeatEnabled(false);

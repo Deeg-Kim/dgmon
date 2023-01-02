@@ -16,11 +16,6 @@ namespace DGMon {
     const int CONNECTION_TOLERANCE = 10;
 
     const int INFINITE_HEIGHT = 999;
-
-    enum TextureSource {
-        NO_TEXTURE,
-        OUTSIDE
-    };
 }
 
 #endif

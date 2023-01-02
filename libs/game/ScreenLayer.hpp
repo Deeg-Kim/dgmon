@@ -14,18 +14,20 @@
 #include "Tile.hpp"
 
 namespace DGMon {
-    class ZoneLayer : public sf::Drawable, public sf::Transformable {
+    class ScreenLayer : public sf::Drawable, public sf::Transformable {
         public:
-            ZoneLayer(int widthBlocks, int heightBlocks, std::vector<std::shared_ptr<Block>> blocks, sf::Texture texture);
-            ~ZoneLayer();
-            void load();
+            ScreenLayer(int widthBlocks, int heightBlocks, std::vector<std::shared_ptr<Block>> blocks, std::shared_ptr<sf::Texture> texture);
+            ~ScreenLayer();
+            void init(int offsetX, int offsetY);
             int getMaxHeight(std::pair<sf::Vector2i, sf::Vector2i> edge, Direction dir);
         private:
             void draw(sf::RenderTarget& target, sf::RenderStates states) const;
             int widthBlocks;
             int heightBlocks;
+            int offsetX;
+            int offsetY;
             std::vector<std::shared_ptr<Block>> blocks;
-            sf::Texture texture;
+            std::shared_ptr<sf::Texture> texture;
             sf::VertexArray vertices;
     };
 };

@@ -1,7 +1,9 @@
 #ifndef STATE_MANAGER_H
 #define STATE_MANAGER_H
 
+#include "data/Data.hpp"
 #include "data/LayoutLoader.hpp"
+#include "data/TextureLoader.hpp"
 #include "state/Screen.hpp"
 #include "state/State.hpp"
 #include "state/StateTransition.hpp"
@@ -19,8 +21,11 @@ namespace DGMon {
             void handleWASDMovement(Direction dir);
         private:
             sf::RenderWindow* window;
+            std::shared_ptr<sf::View> view;
+            std::shared_ptr<Trainer> trainer;
+            std::shared_ptr<TextureLoader> textureLoader;
             std::unique_ptr<LayoutLoader> layoutLoader;
-            std::shared_ptr<Screen> screen;
+            std::shared_ptr<LayoutLoad> screens;
     };
 };
 

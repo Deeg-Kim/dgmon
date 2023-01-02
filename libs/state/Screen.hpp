@@ -1,11 +1,11 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include "SFML/Graphics/RenderWindow.hpp"
 #include "state/State.hpp"
 #include "state/StateTransition.hpp"
-#include "util/Direction.hpp"
 #include "util/Util.hpp"
+#include "game/ScreenLayer.hpp"
+#include <vector>
 #include <optional>
 #include <unordered_map>
 
@@ -16,11 +16,19 @@ namespace DGMon {
             {
                 return std::nullopt;
             }
-            virtual void draw(sf::RenderWindow* window) {}
             virtual void handlePreviousTransition(StateTransition transition) {}
             virtual State getState()
             {
                 return {""};
+            }
+            virtual std::vector<std::shared_ptr<ScreenLayer>> getBackgroundLayers() 
+            {
+                return std::vector<std::shared_ptr<ScreenLayer>> ();
+            }
+
+            virtual std::vector<std::shared_ptr<ScreenLayer>> getForegroundLayers() 
+            {
+                return std::vector<std::shared_ptr<ScreenLayer>> ();
             }
             
     };

@@ -7,7 +7,7 @@
 #include <SFML/Graphics.hpp>
 #include <util/Util.hpp>
 #include "Trainer.hpp"
-#include "ZoneLayer.hpp"
+#include "ScreenLayer.hpp"
 #include "Connection.hpp"
 #include "state/Screen.hpp"
 #include "state/State.hpp"
@@ -20,26 +20,30 @@ namespace DGMon {
                 std::string id,
                 int widthBlocks,
                 int heightBlocks,
-                std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers, 
-                std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers,
+                std::shared_ptr<Trainer> trainer,
+                std::vector<std::shared_ptr<ScreenLayer>> backgroundLayers, 
+                std::vector<std::shared_ptr<ScreenLayer>> foregroundLayers,
                 std::vector<std::shared_ptr<Connection>> connections
             );
             ~Layout();
-            void draw(sf::RenderWindow* window) override;
+            void init(int offsetX, int offsetY);
+            std::vector<std::shared_ptr<ScreenLayer>> getBackgroundLayers() override;
+            std::vector<std::shared_ptr<ScreenLayer>> getForegroundLayers() override; 
             void handlePreviousTransition(StateTransition transition) override;
             std::optional<StateTransition> handleWASDMovement(Direction dir) override;
             State getState() override;
-        private:
+
             std::string id;
             int widthBlocks;
             int heightBlocks;
-            sf::View view;
-            std::vector<std::shared_ptr<ZoneLayer>> backgroundLayers;
-            std::vector<std::shared_ptr<ZoneLayer>> foregroundLayers;
-            std::unordered_map<std::string, std::shared_ptr<Connection>> connectionsByName;
+            int offsetX;
+            int offsetY;
             std::unordered_map<DirectionType, std::vector<std::shared_ptr<Connection>>> connectionsByDirection;
+        private:
             std::shared_ptr<Trainer> trainer;
-            std::pair<sf::Vector2i, sf::Vector2i> getTrainerEdge(Direction dir);
+            std::vector<std::shared_ptr<ScreenLayer>> backgroundLayers;
+            std::vector<std::shared_ptr<ScreenLayer>> foregroundLayers;
+            std::unordered_map<std::string, std::shared_ptr<Connection>> connectionsByName;
             State state;
     };
 };
